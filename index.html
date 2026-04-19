@@ -739,6 +739,139 @@
       text-align: center;
     }
 
+    /* ─── MOBILE HAMBURGER ─── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--navy);
+      transition: all 0.3s;
+      transform-origin: center;
+    }
+    nav.scrolled .nav-hamburger span { background: var(--cream); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: var(--navy);
+      z-index: 99;
+      padding: 2rem;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(201,169,110,0.15);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      display: block;
+      padding: 1rem 0;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,169,110,0.1);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-menu .mobile-cta {
+      margin-top: 1.5rem;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+
+      section { padding: 4rem 1.5rem; }
+
+      /* Hero */
+      #home {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-left {
+        padding: 7rem 1.5rem 3rem;
+      }
+      .hero-right { padding: 0 1.5rem 4rem; }
+      .hero-card { max-width: 100%; }
+      .hero-scroll { left: 1.5rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+      .btn-primary { width: 100%; text-align: center; }
+
+      /* About */
+      #about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 4rem 1.5rem;
+      }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+
+      /* Practice */
+      .practice-header { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+      .practice-grid { grid-template-columns: 1fr; }
+
+      /* Team */
+      .team-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+      /* Contact */
+      #contact { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+
+      /* Footer */
+      footer {
+        flex-direction: column;
+        padding: 2.5rem 1.5rem;
+        gap: 1.5rem;
+        text-align: center;
+      }
+
+      /* Modal */
+      .modal { max-height: 100dvh; border-radius: 0; }
+      .modal-header { padding: 2rem 1.5rem; }
+      .modal-body { padding: 1.5rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+
+      /* Tweaks */
+      #tweaks-panel { left: 1rem; right: 1rem; bottom: 1rem; min-width: unset; }
+    }
+
+    @media (max-width: 600px) {
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 2px; }
+      .about-stat { padding: 1.25rem; }
+      .about-stat-num { font-size: 32px; }
+      .about-quote { padding: 2rem 1.5rem; }
+      .about-quote-text { font-size: 19px; }
+      .hero-headline { font-size: 42px; }
+      .section-title { font-size: 32px; }
+      .bio-photo { height: 220px; }
+      .bio-photo-initials { font-size: 56px; }
+      .about-flags { flex-wrap: wrap; }
+    }
+
     /* ─── ANIMATIONS ─── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -813,7 +946,19 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-cta" onclick="openIntake()">Begin Intake</button>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#practice" onclick="closeMenu()">Practice Areas</a>
+    <a href="#team" onclick="closeMenu()">Attorneys</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+    <button class="mobile-cta" onclick="closeMenu(); openIntake()">Begin Intake</button>
+  </div>
 
   <!-- HERO -->
   <section id="home">
@@ -983,7 +1128,7 @@
             <span class="bio-tag">Family Immigration</span>
             <span class="bio-tag">NYLAG Alumni</span>
           </div>
-          <a href="/cdn-cgi/l/email-protection#c8a2bda4a1a988a3bfa7a6afa9a6acaca9bea1bbe6aba7a5" class="bio-email"><span class="__cf_email__" data-cfemail="e48e91888d85a48f938b8a83858a808085928d97ca878b89">[email&#160;protected]</span></a>
+          <a href="/cdn-cgi/l/email-protection#e58f90898c84a58e928a8b82848b818184938c96cb868a88" class="bio-email"><span class="__cf_email__" data-cfemail="dab0afb6b3bb9ab1adb5b4bdbbb4bebebbacb3a9f4b9b5b7">[email&#160;protected]</span></a>
         </div>
       </div>
 
@@ -1007,7 +1152,7 @@
             <span class="bio-tag">Australian Law</span>
             <span class="bio-tag">NYLAG Alumni</span>
           </div>
-          <a href="/cdn-cgi/l/email-protection#f49686919a90959ab49f839b9a93959a909095829d87da979b99" class="bio-email"><span class="__cf_email__" data-cfemail="402232252e24212e002b372f2e27212e2424213629336e232f2d">[email&#160;protected]</span></a>
+          <a href="/cdn-cgi/l/email-protection#4d2f3f2823292c230d263a22232a2c2329292c3b243e632e2220" class="bio-email"><span class="__cf_email__" data-cfemail="9dffeff8f3f9fcf3ddf6eaf2f3fafcf3f9f9fcebf4eeb3fef2f0">[email&#160;protected]</span></a>
         </div>
       </div>
 
@@ -1041,19 +1186,19 @@
       <div class="contact-info-item">
         <div class="contact-info-label">General Inquiries</div>
         <div class="contact-info-value">
-          <a href="/cdn-cgi/l/email-protection#3f565159507f54485051585e515b5b5e49564c115c5052"><span class="__cf_email__" data-cfemail="95fcfbf3fad5fee2fafbf2f4fbf1f1f4e3fce6bbf6faf8">[email&#160;protected]</span></a>
+          <a href="/cdn-cgi/l/email-protection#92fbfcf4fdd2f9e5fdfcf5f3fcf6f6f3e4fbe1bcf1fdff"><span class="__cf_email__" data-cfemail="026b6c646d4269756d6c65636c666663746b712c616d6f">[email&#160;protected]</span></a>
         </div>
       </div>
       <div class="contact-info-item">
         <div class="contact-info-label">Julia Kwong</div>
         <div class="contact-info-value">
-          <a href="/cdn-cgi/l/email-protection#305a455c5951705b475f5e57515e5454514659431e535f5d"><span class="__cf_email__" data-cfemail="8ae0ffe6e3ebcae1fde5e4edebe4eeeeebfce3f9a4e9e5e7">[email&#160;protected]</span></a>
+          <a href="/cdn-cgi/l/email-protection#553f20393c34153e223a3b32343b313134233c267b363a38"><span class="__cf_email__" data-cfemail="68021d04010928031f07060f09060c0c091e011b460b0705">[email&#160;protected]</span></a>
         </div>
       </div>
       <div class="contact-info-item">
         <div class="contact-info-label">Brendan Davis</div>
         <div class="contact-info-value">
-          <a href="/cdn-cgi/l/email-protection#f29080979c96939cb299859d9c95939c969693849b81dc919d9f"><span class="__cf_email__" data-cfemail="c4a6b6a1aaa0a5aa84afb3abaaa3a5aaa0a0a5b2adb7eaa7aba9">[email&#160;protected]</span></a>
+          <a href="/cdn-cgi/l/email-protection#d9bbabbcb7bdb8b799b2aeb6b7beb8b7bdbdb8afb0aaf7bab6b4"><span class="__cf_email__" data-cfemail="1a78687f747e7b745a716d75747d7b747e7e7b6c736934797577">[email&#160;protected]</span></a>
         </div>
       </div>
       <div class="contact-info-item">
@@ -1199,7 +1344,7 @@
           <div class="success-icon">✓</div>
           <div class="success-title">Intake Received</div>
           <p class="success-body">
-            Thank you. We've received your intake form and will be in touch within 2 business days. If your matter is urgent, please email us directly at <a href="/cdn-cgi/l/email-protection#7e171018113e15091110191f101a1a1f08170d501d1113" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="3c55525a537c574b53525b5d5258585d4a554f125f5351">[email&#160;protected]</span></a>.
+            Thank you. We've received your intake form and will be in touch within 2 business days. If your matter is urgent, please email us directly at <a href="/cdn-cgi/l/email-protection#2c45424a436c475b43424b4d4248484d5a455f024f4341" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="2e474048416e45594140494f404a4a4f58475d004d4143">[email&#160;protected]</span></a>.
           </p>
         </div>
 
@@ -1242,6 +1387,20 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.pageYOffset > 80);
     });
+
+    // Mobile menu
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const burger = document.getElementById('hamburger');
+      const open = menu.classList.toggle('open');
+      burger.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+      document.body.style.overflow = '';
+    }
 
     // Intake modal
     function openIntake() {
