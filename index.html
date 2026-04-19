@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kwong & Davis LLP — Immigration Attorneys</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a2744;
+      --navy-dark: #111c33;
+      --navy-mid: #243058;
+      --gold: #C9A96E;
+      --gold-light: #DEC898;
+      --cream: #F7F3ED;
+      --cream-dark: #EDE7DC;
+      --text: #2a2a2a;
+      --text-mid: #555;
+      --text-light: #888;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4rem;
+      height: 72px;
+      background: rgba(247, 243, 237, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+      transition: all 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(26, 39, 68, 0.97);
+    }
+    nav.scrolled .nav-links a,
+    nav.scrolled .nav-logo-text { color: var(--cream); }
+    nav.scrolled .nav-logo-mark { background: var(--gold); color: var(--navy); }
+    nav.scrolled .nav-cta {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 40px; height: 40px;
+      background: var(--navy);
+      color: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: all 0.3s;
+    }
+    .nav-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      transition: color 0.3s;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--navy);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--navy);
+      color: var(--cream);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 10px 22px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+    /* ─── HERO ─── */
+    #home {
+      min-height: 100vh;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-pattern {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(201,169,110,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201,169,110,0.04) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10rem 5rem 6rem 6rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 5vw, 76px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-sub {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(247, 243, 237, 0.7);
+      max-width: 440px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 32px;
+      transition: all 0.2s;
+      display: inline-block;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-secondary {
+      color: rgba(247,243,237,0.7);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(201,169,110,0.4);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { color: var(--gold); border-color: var(--gold); }
+
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 4rem;
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,169,110,0.15);
+      padding: 3rem;
+      max-width: 360px;
+      width: 100%;
+      opacity: 0;
+      animation: fadeIn 1s 1s forwards;
+    }
+    .hero-card-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .hero-card-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(201,169,110,0.1);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .hero-card-item:last-child { border-bottom: none; }
+    .hero-card-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .hero-card-item-text {
+      font-size: 14px;
+      color: rgba(247,243,237,0.75);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 6rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(247,243,237,0.35);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s forwards;
+    }
+    .hero-scroll-line {
+      width: 40px; height: 1px;
+      background: rgba(201,169,110,0.3);
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 7rem 6rem; }
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 54px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-mid);
+      max-width: 640px;
+    }
+    .divider {
+      width: 48px; height: 1px;
+      background: var(--gold);
+      margin: 1.5rem 0;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 3rem;
+    }
+    .about-stat {
+      background: var(--cream);
+      padding: 2rem;
+    }
+    .about-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .about-stat-label {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+      line-height: 1.4;
+    }
+    .about-right {
+      position: relative;
+    }
+    .about-quote {
+      background: var(--navy);
+      padding: 3rem;
+      position: relative;
+    }
+    .about-quote::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      color: var(--gold);
+      opacity: 0.25;
+      position: absolute;
+      top: -20px; left: 20px;
+      line-height: 1;
+    }
+    .about-quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--cream);
+      position: relative;
+      z-index: 1;
+    }
+    .about-quote-source {
+      margin-top: 1.5rem;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .about-flags {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      align-items: center;
+    }
+    .flag-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--cream);
+      font-size: 12px;
+      color: var(--navy);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+    .flag-icon { font-size: 16px; }
+
+    /* ─── PRACTICE AREAS ─── */
+    #practice {
+      background: var(--cream);
+    }
+    .practice-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+    .practice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .practice-card {
+      background: var(--white);
+      padding: 2.5rem;
+      transition: all 0.25s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .practice-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .practice-card:hover { background: var(--navy); }
+    .practice-card:hover .practice-card-title { color: var(--cream); }
+    .practice-card:hover .practice-card-body { color: rgba(247,243,237,0.6); }
+    .practice-card:hover::after { transform: scaleX(1); }
+    .practice-card:hover .practice-icon { color: var(--gold); }
+    .practice-icon {
+      font-size: 28px;
+      margin-bottom: 1.5rem;
+      color: var(--navy);
+      transition: color 0.25s;
+    }
+    .practice-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+      transition: color 0.25s;
+    }
+    .practice-card-body {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-mid);
+      transition: color 0.25s;
+    }
+
+    /* ─── TEAM ─── */
+    #team {
+      background: var(--white);
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3.5rem;
+    }
+    .bio-card {
+      background: var(--cream);
+    }
+    .bio-photo {
+      width: 100%;
+      height: 300px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .bio-photo-initials {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 72px;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+    .bio-photo-accent {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 80px; height: 80px;
+      background: var(--gold);
+      opacity: 0.12;
+    }
+    .bio-body {
+      padding: 2.5rem;
+    }
+    .bio-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--navy);
+      margin-bottom: 0.25rem;
+    }
+    .bio-title {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .bio-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-mid);
+      margin-bottom: 1.5rem;
+    }
+    .bio-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .bio-tag {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--navy);
+      padding: 5px 12px;
+      border: 1px solid rgba(26,39,68,0.2);
+    }
+    .bio-email {
+      font-size: 13px;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid rgba(201,169,110,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .bio-email:hover { border-color: var(--gold); }
+
+    /* ─── INTAKE / CTA ─── */
+    #intake {
+      background: var(--navy);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #intake .section-title { color: var(--cream); }
+    #intake .section-body { color: rgba(247,243,237,0.65); margin: 0 auto 2.5rem; }
+    .intake-pattern {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(201,169,110,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .intake-inner { position: relative; z-index: 1; }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(17,28,51,0.85);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      max-width: 640px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal-header {
+      background: var(--navy);
+      padding: 2.5rem 3rem;
+    }
+    .modal-header-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .modal-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--cream);
+    }
+    .modal-body { padding: 2.5rem 3rem; }
+    .modal-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: none; border: none;
+      color: rgba(247,243,237,0.5);
+      font-size: 20px;
+      cursor: pointer;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--gold); }
+    .clio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+      padding: 8px 16px;
+      font-size: 11px;
+      color: var(--text-mid);
+      margin-bottom: 2rem;
+      letter-spacing: 0.04em;
+    }
+    .clio-dot { width: 8px; height: 8px; background: #4CAF50; border-radius: 50%; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--cream-dark);
+      background: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-textarea { resize: vertical; min-height: 100px; }
+    .form-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: var(--navy);
+      margin: 1.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .form-note {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+    .form-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s;
+    }
+    .form-submit:hover { background: var(--gold); color: var(--navy); }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+    }
+    .form-success.show { display: block; }
+    .form-form.hide { display: none; }
+    .success-icon {
+      width: 56px; height: 56px;
+      background: var(--cream);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 24px;
+    }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+    .success-body {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.7;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--cream-dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info-item {
+      margin-bottom: 2rem;
+    }
+    .contact-info-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .contact-info-value {
+      font-size: 15px;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+    .contact-info-value a {
+      color: var(--navy);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-info-value a:hover { color: var(--gold); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy-dark);
+      padding: 2.5rem 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      color: rgba(247,243,237,0.4);
+      letter-spacing: 0.04em;
+    }
+    .footer-disclaimer {
+      font-size: 11px;
+      color: rgba(247,243,237,0.3);
+      line-height: 1.5;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── TWEAKS PANEL ─── */
+    #tweaks-panel {
+      display: none;
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      background: var(--white);
+      border: 1px solid var(--cream-dark);
+      box-shadow: 0 8px 40px rgba(26,39,68,0.15);
+      z-index: 999;
+      min-width: 260px;
+      overflow: hidden;
+    }
+    #tweaks-panel.open { display: block; }
+    .tweaks-header {
+      background: var(--navy);
+      padding: 1rem 1.25rem;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .tweaks-body { padding: 1.25rem; }
+    .tweak-group { margin-bottom: 1.25rem; }
+    .tweak-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .tweak-options { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tweak-opt {
+      padding: 6px 14px;
+      border: 1px solid var(--cream-dark);
+      font-size: 12px;
+      cursor: pointer;
+      background: var(--cream);
+      transition: all 0.15s;
+      color: var(--text);
+    }
+    .tweak-opt.active, .tweak-opt:hover {
+      background: var(--navy);
+      color: var(--cream);
+      border-color: var(--navy);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#home" class="nav-logo">
+      <div class="nav-logo-mark">K&D</div>
+      <div class="nav-logo-text">Kwong &amp; Davis LLP</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#practice">Practice</a></li>
+      <li><a href="#team">Attorneys</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="openIntake()">Begin Intake</button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-left">
+      <div class="hero-eyebrow">Immigration Law — New York &amp; Australia</div>
+      <h1 class="hero-headline">
+        Legal advocacy<br>rooted in <em>humanity</em>
+      </h1>
+      <p class="hero-sub">
+        Kwong &amp; Davis LLP is a boutique immigration firm dedicated to guiding individuals and families through one of life's most consequential journeys — with experience, compassion, and care.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="openIntake()">Start Your Intake</button>
+        <a href="#about" class="btn-secondary">Our Story</a>
+      </div>
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span>Scroll to explore</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-label">We can help with</div>
+        <div class="hero-card-item">
+          <div class="hero-card-dot"></div>
+          <div class="hero-card-item-text">Asylum &amp; humanitarian protection</div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-dot"></div>
+          <div class="hero-card-item-text">E-3 visas for Australian nationals</div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-dot"></div>
+          <div class="hero-card-item-text">Family-based immigration petitions</div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-dot"></div>
+          <div class="hero-card-item-text">Green cards &amp; lawful permanent residence</div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-dot"></div>
+          <div class="hero-card-item-text">DACA &amp; special immigrant visas</div>
+        </div>
+        <div class="hero-card-item">
+          <div class="hero-card-dot"></div>
+          <div class="hero-card-item-text">Removal defense &amp; appeals</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div>
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-title">Built on a belief<br>that <em>everyone deserves</em><br>a fair chance</h2>
+      <div class="divider"></div>
+      <p class="section-body">
+        Kwong &amp; Davis LLP was founded by two immigration attorneys who met while representing clients at the New York Legal Assistance Group — one of the nation's largest legal services providers. United by a shared belief that immigration law should be a force for equity, Julia and Brendan launched the firm to bring the same depth of public-interest experience to a wider community of clients.
+      </p>
+      <p class="section-body" style="margin-top:1.25rem;">
+        The firm's practice spans the full breadth of US immigration law, with particular expertise in humanitarian cases, asylum proceedings, and the special needs of Australian nationals navigating the US visa system. Every client is treated as a whole person, not a case number.
+      </p>
+      <div class="about-flags">
+        <div class="flag-pill"><span class="flag-icon">🇺🇸</span> Licensed in New York</div>
+        <div class="flag-pill"><span class="flag-icon">🇦🇺</span> Australian law experience</div>
+      </div>
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-num">200+</div>
+          <div class="about-stat-label">Clients represented across asylum, visas &amp; removal cases</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">15+</div>
+          <div class="about-stat-label">Years of combined immigration law experience</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">2</div>
+          <div class="about-stat-label">Jurisdictions — US and Australian law</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">∞</div>
+          <div class="about-stat-label">Commitment to access to justice</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="about-quote">
+        <p class="about-quote-text">
+          "We started this firm because we believe immigration law has the power to reunite families, protect the vulnerable, and build communities. That belief drives everything we do."
+        </p>
+        <div class="about-quote-source">— Julia Kwong &amp; Brendan Davis</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE AREAS -->
+  <section id="practice">
+    <div class="practice-header">
+      <div>
+        <div class="section-eyebrow">Practice Areas</div>
+        <h2 class="section-title">How we can<br><em>help you</em></h2>
+      </div>
+      <p class="section-body">
+        Our practice spans the full spectrum of US immigration law, with deep expertise in humanitarian protection and cross-border matters for those with ties to Australia.
+      </p>
+    </div>
+    <div class="practice-grid">
+      <div class="practice-card">
+        <div class="practice-icon">⚖️</div>
+        <div class="practice-card-title">Asylum &amp; Humanitarian Protection</div>
+        <p class="practice-card-body">Representing individuals who have fled persecution based on race, religion, nationality, political opinion, or membership in a particular social group. We handle affirmative and defensive asylum cases with sensitivity and rigor.</p>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">🌏</div>
+        <div class="practice-card-title">E-3 Visas &amp; Australian Nationals</div>
+        <p class="practice-card-body">The E-3 visa is available exclusively to Australian citizens in specialty occupations. We help Australians navigate the US visa process — from initial applications to renewals, transfers, and status changes.</p>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">👨‍👩‍👧</div>
+        <div class="practice-card-title">Family-Based Immigration</div>
+        <p class="practice-card-body">Petitions to reunite immediate relatives and qualifying family members with their US citizen or lawful permanent resident sponsors. We guide you through every step of the petition and adjustment process.</p>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">🛡️</div>
+        <div class="practice-card-title">Removal Defense &amp; Appeals</div>
+        <p class="practice-card-body">Representation before immigration courts and the Board of Immigration Appeals. We fight to protect our clients from deportation and exhaust every available legal avenue for relief.</p>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">🌿</div>
+        <div class="practice-card-title">Green Cards &amp; Adjustment</div>
+        <p class="practice-card-body">Guiding clients through employment-based, family-based, and diversity-based pathways to lawful permanent residence — including adjustment of status and consular processing.</p>
+      </div>
+      <div class="practice-card">
+        <div class="practice-icon">📋</div>
+        <div class="practice-card-title">DACA, TPS &amp; Special Visas</div>
+        <p class="practice-card-body">Renewals and applications for Deferred Action for Childhood Arrivals, Temporary Protected Status, special immigrant juvenile status, U visas for crime victims, and T visas for trafficking survivors.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="section-eyebrow">Our Attorneys</div>
+    <h2 class="section-title">Meet the <em>partners</em></h2>
+    <div class="divider"></div>
+    <div class="team-grid">
+
+      <div class="bio-card">
+        <div class="bio-photo">
+          <div class="bio-photo-initials">JK</div>
+          <div class="bio-photo-accent"></div>
+        </div>
+        <div class="bio-body">
+          <div class="bio-name">Julia Kwong</div>
+          <div class="bio-title">Partner &amp; Co-Founder</div>
+          <p class="bio-text">
+            Julia is a seasoned immigration attorney with deep roots in public interest law. Before co-founding Kwong &amp; Davis LLP, she served as a Senior Staff Attorney at the New York Legal Assistance Group (NYLAG), where she represented low-income clients in complex immigration matters including asylum, removal defense, and family petitions.
+          </p>
+          <p class="bio-text">
+            Known for her meticulous preparation and genuine care for clients, Julia has successfully litigated before immigration courts, the Board of Immigration Appeals, and federal circuit courts. She is fluent in Mandarin and has a particular focus on protecting clients from East and Southeast Asia.
+          </p>
+          <div class="bio-tags">
+            <span class="bio-tag">Asylum</span>
+            <span class="bio-tag">Removal Defense</span>
+            <span class="bio-tag">Family Immigration</span>
+            <span class="bio-tag">NYLAG Alumni</span>
+          </div>
+          <a href="/cdn-cgi/l/email-protection#c8a2bda4a1a988a3bfa7a6afa9a6acaca9bea1bbe6aba7a5" class="bio-email"><span class="__cf_email__" data-cfemail="e48e91888d85a48f938b8a83858a808085928d97ca878b89">[email&#160;protected]</span></a>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-photo">
+          <div class="bio-photo-initials">BD</div>
+          <div class="bio-photo-accent"></div>
+        </div>
+        <div class="bio-body">
+          <div class="bio-name">Brendan Davis</div>
+          <div class="bio-title">Partner &amp; Co-Founder</div>
+          <p class="bio-text">
+            Originally from Australia and holding dual legal qualifications (LL.B., University of Queensland), Brendan brings a rare cross-jurisdictional perspective to US immigration law. He previously served as a Supervising Attorney at NYLAG and as Legal Services Coordinator at South Bronx United, where he built immigration legal services programs from the ground up.
+          </p>
+          <p class="bio-text">
+            Brendan specializes in E-3 visa matters for Australian nationals, humanitarian immigration, and community-based legal services. His experience bridging two legal systems makes him uniquely equipped to serve clients with ties to both the US and Australia.
+          </p>
+          <div class="bio-tags">
+            <span class="bio-tag">E-3 Visas</span>
+            <span class="bio-tag">Humanitarian Immigration</span>
+            <span class="bio-tag">Australian Law</span>
+            <span class="bio-tag">NYLAG Alumni</span>
+          </div>
+          <a href="/cdn-cgi/l/email-protection#f49686919a90959ab49f839b9a93959a909095829d87da979b99" class="bio-email"><span class="__cf_email__" data-cfemail="402232252e24212e002b372f2e27212e2424213629336e232f2d">[email&#160;protected]</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTAKE CTA -->
+  <section id="intake">
+    <div class="intake-pattern"></div>
+    <div class="intake-inner">
+      <div class="section-eyebrow">Get Started</div>
+      <h2 class="section-title" style="color:var(--cream)">Ready to take<br>the <em style="color:var(--gold-light)">next step?</em></h2>
+      <p class="section-body" style="color:rgba(247,243,237,0.65);margin:0 auto 2.5rem;">
+        We begin every client relationship with a careful intake process to understand your situation and determine how we can best help you. Complete our secure intake form — powered by Clio — to get started.
+      </p>
+      <button class="btn-primary" onclick="openIntake()" style="font-size:13px;padding:16px 40px;">Begin Your Intake</button>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div>
+      <div class="section-eyebrow">Get in Touch</div>
+      <h2 class="section-title">Contact the<br><em>firm</em></h2>
+      <div class="divider"></div>
+      <p class="section-body">
+        We welcome inquiries from prospective clients and referral partners. For a confidential consultation, please complete our intake form or reach out directly.
+      </p>
+    </div>
+    <div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">General Inquiries</div>
+        <div class="contact-info-value">
+          <a href="/cdn-cgi/l/email-protection#3f565159507f54485051585e515b5b5e49564c115c5052"><span class="__cf_email__" data-cfemail="95fcfbf3fad5fee2fafbf2f4fbf1f1f4e3fce6bbf6faf8">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Julia Kwong</div>
+        <div class="contact-info-value">
+          <a href="/cdn-cgi/l/email-protection#305a455c5951705b475f5e57515e5454514659431e535f5d"><span class="__cf_email__" data-cfemail="8ae0ffe6e3ebcae1fde5e4edebe4eeeeebfce3f9a4e9e5e7">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Brendan Davis</div>
+        <div class="contact-info-value">
+          <a href="/cdn-cgi/l/email-protection#f29080979c96939cb299859d9c95939c969693849b81dc919d9f"><span class="__cf_email__" data-cfemail="c4a6b6a1aaa0a5aa84afb3abaaa3a5aaa0a0a5b2adb7eaa7aba9">[email&#160;protected]</span></a>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Location</div>
+        <div class="contact-info-value">New York, NY<br><span style="font-size:13px;color:var(--text-light)">Serving clients nationwide &amp; Australian nationals globally</span></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-label">Begin Your Matter</div>
+        <div class="contact-info-value">
+          <button class="btn-primary" onclick="openIntake()" style="margin-top:0.5rem">Complete Intake Form</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Kwong &amp; Davis LLP &copy; 2025</div>
+    <div class="footer-disclaimer">
+      Attorney advertising. The information on this website is for general informational purposes only and does not constitute legal advice. Contacting us does not create an attorney-client relationship.
+    </div>
+    <div class="footer-logo">New York, NY</div>
+  </footer>
+
+  <!-- INTAKE MODAL -->
+  <div class="modal-overlay" id="intake-modal" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeIntake()">✕</button>
+      <div class="modal-header">
+        <div class="modal-header-label">Secure Client Intake · Powered by Clio Grow</div>
+        <h2>New Client Intake Form</h2>
+      </div>
+      <div class="modal-body">
+        <div class="clio-badge">
+          <div class="clio-dot"></div>
+          Secure form powered by Clio Grow
+        </div>
+
+        <div class="form-form" id="intake-form">
+          <p style="font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:1.5rem;">
+            Please complete this form as fully as possible. All information is confidential. A member of our team will follow up within 2 business days.
+          </p>
+
+          <div class="form-section-title">Your Information</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">First Name *</label>
+              <input type="text" class="form-input" placeholder="Given name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name *</label>
+              <input type="text" class="form-input" placeholder="Family name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-input" placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" placeholder="+1 (___) ___-____">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Country of Birth</label>
+              <input type="text" class="form-input" placeholder="Country">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Current Immigration Status</label>
+              <select class="form-select">
+                <option value="">Select...</option>
+                <option>US Citizen</option>
+                <option>Lawful Permanent Resident</option>
+                <option>F-1 Student Visa</option>
+                <option>H-1B Work Visa</option>
+                <option>E-3 Visa (Australian)</option>
+                <option>B-1/B-2 Visitor Visa</option>
+                <option>Undocumented / No Status</option>
+                <option>Pending Asylum</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-section-title">Matter Type</div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label">How can we help you? *</label>
+              <select class="form-select">
+                <option value="">Select a primary matter...</option>
+                <option>Asylum Application</option>
+                <option>E-3 Visa (Australian Nationals)</option>
+                <option>Family-Based Petition</option>
+                <option>Green Card / Adjustment of Status</option>
+                <option>Removal / Deportation Defense</option>
+                <option>DACA Renewal or Application</option>
+                <option>U Visa / T Visa</option>
+                <option>Work Authorization</option>
+                <option>Not Sure — Need Consultation</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Tell us about your situation</label>
+              <textarea class="form-textarea" placeholder="Briefly describe your immigration situation and what you are hoping to achieve. Any details you can share will help us respond more effectively."></textarea>
+              <div class="form-note">This is confidential. Do not include sensitive documents here — we will request those in your consultation.</div>
+            </div>
+          </div>
+
+          <div class="form-section-title">Referral &amp; Availability</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">How did you hear about us?</label>
+              <select class="form-select">
+                <option value="">Select...</option>
+                <option>Referral from attorney</option>
+                <option>Referral from friend or family</option>
+                <option>Google / web search</option>
+                <option>Community organization</option>
+                <option>LinkedIn</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred Contact Method</label>
+              <select class="form-select">
+                <option>Email</option>
+                <option>Phone</option>
+                <option>Either</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Do you have any upcoming deadlines or hearings?</label>
+              <input type="text" class="form-input" placeholder="e.g. Court date on MM/DD/YYYY, visa expiry, etc.">
+              <div class="form-note">Urgency helps us prioritize your inquiry appropriately.</div>
+            </div>
+          </div>
+
+          <button class="form-submit" onclick="submitIntake()">Submit Intake Form</button>
+          <p style="font-size:11px;color:var(--text-light);margin-top:1rem;text-align:center;line-height:1.5;">
+            Submitting this form does not create an attorney-client relationship. We will review your matter and contact you promptly.
+          </p>
+        </div>
+
+        <div class="form-success" id="intake-success">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Intake Received</div>
+          <p class="success-body">
+            Thank you. We've received your intake form and will be in touch within 2 business days. If your matter is urgent, please email us directly at <a href="/cdn-cgi/l/email-protection#7e171018113e15091110191f101a1a1f08170d501d1113" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="3c55525a537c574b53525b5d5258585d4a554f125f5351">[email&#160;protected]</span></a>.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TWEAKS PANEL -->
+  <div id="tweaks-panel">
+    <div class="tweaks-header">Tweaks</div>
+    <div class="tweaks-body">
+      <div class="tweak-group">
+        <span class="tweak-label">Color Palette</span>
+        <div class="tweak-options">
+          <div class="tweak-opt active" onclick="setPalette('navy-gold', this)">Navy + Gold</div>
+          <div class="tweak-opt" onclick="setPalette('teal-warm', this)">Teal + Warm</div>
+          <div class="tweak-opt" onclick="setPalette('charcoal-sage', this)">Charcoal + Sage</div>
+        </div>
+      </div>
+      <div class="tweak-group">
+        <span class="tweak-label">Hero Style</span>
+        <div class="tweak-options">
+          <div class="tweak-opt active" onclick="setHero('split', this)">Split Layout</div>
+          <div class="tweak-opt" onclick="setHero('centered', this)">Centered</div>
+        </div>
+      </div>
+      <div class="tweak-group">
+        <span class="tweak-label">Footer Style</span>
+        <div class="tweak-options">
+          <div class="tweak-opt active" onclick="setFooter('minimal', this)">Minimal</div>
+          <div class="tweak-opt" onclick="setFooter('full', this)">Full</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
+    // Nav scroll
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.pageYOffset > 80);
+    });
+
+    // Intake modal
+    function openIntake() {
+      document.getElementById('intake-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeIntake() {
+      document.getElementById('intake-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('intake-modal')) closeIntake();
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeIntake();
+    });
+
+    function submitIntake() {
+      document.getElementById('intake-form').classList.add('hide');
+      document.getElementById('intake-success').classList.add('show');
+    }
+
+    // Tweaks
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "palette": "navy-gold",
+      "hero": "split",
+      "footer": "full"
+    }/*EDITMODE-END*/;
+
+    window.addEventListener('message', e => {
+      if (e.data?.type === '__activate_edit_mode') {
+        document.getElementById('tweaks-panel').classList.add('open');
+      }
+      if (e.data?.type === '__deactivate_edit_mode') {
+        document.getElementById('tweaks-panel').classList.remove('open');
+      }
+    });
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+    function setPalette(name, el) {
+      document.querySelectorAll('.tweak-group:nth-child(1) .tweak-opt').forEach(o => o.classList.remove('active'));
+      el.classList.add('active');
+      const root = document.documentElement;
+      if (name === 'navy-gold') {
+        root.style.setProperty('--navy', '#1a2744');
+        root.style.setProperty('--gold', '#C9A96E');
+        root.style.setProperty('--cream', '#F7F3ED');
+      } else if (name === 'teal-warm') {
+        root.style.setProperty('--navy', '#2D5954');
+        root.style.setProperty('--gold', '#D4A37A');
+        root.style.setProperty('--cream', '#F5F0EA');
+      } else if (name === 'charcoal-sage') {
+        root.style.setProperty('--navy', '#2A2A2A');
+        root.style.setProperty('--gold', '#7B9E87');
+        root.style.setProperty('--cream', '#F4F4F2');
+      }
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { palette: name } }, '*');
+    }
+
+    function setHero(type, el) {
+      document.querySelectorAll('.tweak-group:nth-child(2) .tweak-opt').forEach(o => o.classList.remove('active'));
+      el.classList.add('active');
+      const hero = document.getElementById('home');
+      if (type === 'centered') {
+        hero.style.gridTemplateColumns = '1fr';
+        document.querySelector('.hero-right').style.display = 'none';
+        document.querySelector('.hero-left').style.padding = '10rem 10rem 6rem';
+        document.querySelector('.hero-left').style.maxWidth = '800px';
+        document.querySelector('.hero-left').style.margin = '0 auto';
+      } else {
+        hero.style.gridTemplateColumns = '1fr 1fr';
+        document.querySelector('.hero-right').style.display = '';
+        document.querySelector('.hero-left').style.padding = '';
+        document.querySelector('.hero-left').style.maxWidth = '';
+        document.querySelector('.hero-left').style.margin = '';
+      }
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { hero: type } }, '*');
+    }
+
+    function setFooter(type, el) {
+      document.querySelectorAll('.tweak-group:nth-child(3) .tweak-opt').forEach(o => o.classList.remove('active'));
+      el.classList.add('active');
+      const footer = document.querySelector('footer');
+      if (type === 'full') {
+        footer.style.flexDirection = 'column';
+        footer.style.padding = '4rem 6rem';
+        footer.style.gap = '2rem';
+        footer.style.textAlign = 'center';
+      } else {
+        footer.style.flexDirection = '';
+        footer.style.padding = '';
+        footer.style.gap = '';
+        footer.style.textAlign = '';
+      }
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { footer: type } }, '*');
+    }
+
+    // Apply saved tweaks
+    if (TWEAK_DEFAULTS.palette !== 'navy-gold') {
+      const opt = [...document.querySelectorAll('.tweak-group:nth-child(1) .tweak-opt')].find(o => o.textContent.toLowerCase().includes(TWEAK_DEFAULTS.palette.replace('-', ' + ').split('-')[0]));
+      if (opt) setPalette(TWEAK_DEFAULTS.palette, opt);
+    }
+  </script>
+</body>
+</html>
