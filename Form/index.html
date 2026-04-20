@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legal inquiry form</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f4f0;
+      color: #1a1a18;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .shell { max-width: 560px; margin: 0 auto; }
+
+    /* Progress */
+    .progress { display: flex; gap: 4px; margin-bottom: .5rem; }
+    .seg { flex: 1; height: 3px; border-radius: 2px; background: #d3d1c7; transition: background .25s; }
+    .seg.done   { background: #185FA5; }
+    .seg.active { background: #85B7EB; }
+    .step-labels { display: flex; margin-bottom: 1.5rem; }
+    .slbl { flex: 1; font-size: 11px; color: #888780; text-align: center; }
+    .slbl.done   { color: #5F5E5A; }
+    .slbl.active { color: #185FA5; font-weight: 500; }
+
+    /* Card */
+    .card { background: #fff; border: 0.5px solid rgba(0,0,0,.1); border-radius: 12px; overflow: hidden; }
+    .card-head { padding: 1.25rem 1.5rem; border-bottom: 0.5px solid rgba(0,0,0,.08); }
+    .card-title { font-size: 17px; font-weight: 500; margin-bottom: 3px; }
+    .card-sub   { font-size: 13px; color: #5F5E5A; line-height: 1.5; }
+    .card-body  { padding: 1.25rem 1.5rem; }
+
+    /* Fields */
+    .field { margin-bottom: 1.1rem; }
+    .row2  { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.1rem; }
+    .lbl   { display: block; font-size: 12px; font-weight: 500; color: #5F5E5A; margin-bottom: 5px; }
+    .req   { color: #A32D2D; }
+    .hint  { font-size: 11px; color: #888780; margin-top: 4px; }
+
+    input[type=text], input[type=email], input[type=tel], input[type=date], select, textarea {
+      width: 100%; font-size: 14px; font-family: inherit;
+      padding: 8px 10px; border: 0.5px solid rgba(0,0,0,.2);
+      border-radius: 8px; background: #fff; color: #1a1a18;
+      outline: none; transition: border-color .15s, box-shadow .15s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #378ADD;
+      box-shadow: 0 0 0 2px rgba(55,138,221,.12);
+    }
+    textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
+
+    /* Pills */
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill  {
+      padding: 7px 14px; border: 0.5px solid rgba(0,0,0,.18);
+      border-radius: 20px; cursor: pointer; font-size: 13px;
+      color: #5F5E5A; background: #fff; transition: all .15s; user-select: none;
+    }
+    .pill:hover    { border-color: rgba(0,0,0,.35); color: #1a1a18; }
+    .pill.selected { border-color: #185FA5; background: #E6F1FB; color: #0C447C; }
+
+    /* Banners */
+    .banner-warn {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: #FCEBEB; border: 0.5px solid #F09595;
+      border-radius: 8px; padding: 11px 14px; margin-bottom: 1.1rem;
+      font-size: 13px; color: #791F1F; line-height: 1.5;
+    }
+    .banner-warn svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Consent */
+    .consent-box {
+      background: #f5f4f0; border-radius: 8px; padding: 12px 14px;
+      font-size: 12px; color: #5F5E5A; line-height: 1.6; margin-bottom: 1rem;
+    }
+    .consent-box strong { font-size: 12px; font-weight: 500; color: #1a1a18; }
+    .check-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: .7rem; }
+    .check-row input { margin-top: 2px; width: 15px; height: 15px; flex-shrink: 0; accent-color: #185FA5; }
+    .check-row label { font-size: 13px; line-height: 1.5; cursor: pointer; }
+
+    /* Footer */
+    .foot {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 1.5rem; border-top: 0.5px solid rgba(0,0,0,.08);
+    }
+    .pnote    { font-size: 12px; color: #888780; }
+    .btn-back { font-size: 13px; color: #5F5E5A; background: none; border: none; cursor: pointer; }
+    .btn-back:hover { color: #1a1a18; }
+    .btn-next {
+      font-size: 13px; font-weight: 500; color: #fff; background: #185FA5;
+      border: none; border-radius: 8px; padding: 8px 22px; cursor: pointer;
+    }
+    .btn-next:hover    { background: #0C447C; }
+    .btn-next:disabled { background: #B4B2A9; cursor: not-allowed; }
+
+    /* Success */
+    .success-wrap { padding: 2.5rem 1.5rem; text-align: center; }
+    .success-icon {
+      width: 48px; height: 48px; border-radius: 50%; background: #E1F5EE;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+    }
+    .success-title { font-size: 17px; font-weight: 500; margin-bottom: .5rem; }
+    .success-sub   { font-size: 13px; color: #5F5E5A; line-height: 1.6; max-width: 360px; margin: 0 auto; }
+    .urg-note {
+      background: #FCEBEB; border: 0.5px solid #F09595; border-radius: 8px;
+      padding: 11px 14px; font-size: 13px; color: #791F1F; line-height: 1.5;
+      text-align: left; margin-top: 1rem;
+    }
+
+    .hidden { display: none !important; }
+    @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="progress">
+    <div class="seg active" id="s1"></div>
+    <div class="seg" id="s2"></div>
+    <div class="seg" id="s3"></div>
+  </div>
+  <div class="step-labels">
+    <span class="slbl active" id="l1">Your details</span>
+    <span class="slbl" id="l2">Your situation</span>
+    <span class="slbl" id="l3">Deadlines &amp; submit</span>
+  </div>
+
+  <!-- Step 1 -->
+  <div id="step1" class="card">
+    <div class="card-head">
+      <div class="card-title">Tell us about yourself</div>
+      <div class="card-sub">How can we reach you?</div>
+    </div>
+    <div class="card-body">
+      <div class="row2">
+        <div>
+          <label class="lbl" for="fname">First name <span class="req">*</span></label>
+          <input type="text" id="fname" placeholder="Jane" autocomplete="given-name">
+        </div>
+        <div>
+          <label class="lbl" for="lname">Last name <span class="req">*</span></label>
+          <input type="text" id="lname" placeholder="Smith" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl" for="email">Email address <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="jane@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label class="lbl" for="phone">Phone number</label>
+        <input type="tel" id="phone" placeholder="(212) 555-0100" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label class="lbl">Preferred contact method</label>
+        <div class="pills" id="grp-contact">
+          <div class="pill selected" data-val="email"  onclick="pick('grp-contact',this)">Email</div>
+          <div class="pill"          data-val="phone"  onclick="pick('grp-contact',this)">Phone call</div>
+          <div class="pill"          data-val="text"   onclick="pick('grp-contact',this)">Text message</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl">Best time to reach you</label>
+        <div class="pills" id="grp-time">
+          <div class="pill selected" data-val="morning"   onclick="pick('grp-time',this)">Morning</div>
+          <div class="pill"          data-val="afternoon" onclick="pick('grp-time',this)">Afternoon</div>
+          <div class="pill"          data-val="evening"   onclick="pick('grp-time',this)">Evening</div>
+          <div class="pill"          data-val="anytime"   onclick="pick('grp-time',this)">Any time</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span></span>
+      <span class="pnote">1 of 3</span>
+      <button class="btn-next" onclick="toStep2()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="step2" class="card hidden">
+    <div class="card-head">
+      <div class="card-title">Your situation</div>
+      <div class="card-sub">Describe what's happening — no legal language needed.</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label class="lbl" for="situation">What is your legal issue about? <span class="req">*</span></label>
+        <textarea id="situation" rows="5" placeholder="Describe your situation as clearly as you can — for example: I received a notice from my landlord, I was in a car accident, I need help with a contract..."></textarea>
+        <div class="hint">Everything you share is kept strictly confidential.</div>
+      </div>
+      <div class="field">
+        <label class="lbl">Do you currently have an attorney?</label>
+        <div class="pills" id="grp-atty">
+          <div class="pill"          data-val="yes" onclick="pick('grp-atty',this)">Yes</div>
+          <div class="pill selected" data-val="no"  onclick="pick('grp-atty',this)">No</div>
+          <div class="pill"          data-val="had" onclick="pick('grp-atty',this)">I had one previously</div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="lbl">How urgent is your situation?</label>
+        <div class="pills" id="grp-urg">
+          <div class="pill"          data-val="immediate" onclick="pick('grp-urg',this)">Immediate</div>
+          <div class="pill selected" data-val="soon"      onclick="pick('grp-urg',this)">Within a few weeks</div>
+          <div class="pill"          data-val="planning"  onclick="pick('grp-urg',this)">Planning ahead</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn-back" onclick="go(1)">← Back</button>
+      <span class="pnote">2 of 3</span>
+      <button class="btn-next" onclick="toStep3()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="step3" class="card hidden">
+    <div class="card-head">
+      <div class="card-title">Deadlines &amp; submit</div>
+      <div class="card-sub">Let us know about any upcoming dates.</div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label class="lbl">Is there an upcoming court date or legal deadline?</label>
+        <div class="pills" id="grp-dl">
+          <div class="pill"          data-val="yes"    onclick="pick('grp-dl',this);dlToggle()">Yes</div>
+          <div class="pill selected" data-val="no"     onclick="pick('grp-dl',this);dlToggle()">No</div>
+          <div class="pill"          data-val="unsure" onclick="pick('grp-dl',this);dlToggle()">Not sure</div>
+        </div>
+      </div>
+
+      <div id="dl-fields" class="hidden">
+        <div class="row2">
+          <div>
+            <label class="lbl" for="dl-date">Deadline date</label>
+            <input type="date" id="dl-date" onchange="urgencyCheck()">
+          </div>
+          <div>
+            <label class="lbl" for="dl-type">Type of deadline</label>
+            <select id="dl-type">
+              <option value="">Select one</option>
+              <option>Court hearing or trial</option>
+              <option>Filing deadline</option>
+              <option>Response due date</option>
+              <option>Contract deadline</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div id="urg-banner" class="banner-warn hidden">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.345 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+          <span><strong>Urgent:</strong> Your deadline is within 14 days. We will prioritise your inquiry.</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="referral">How did you hear about us?</label>
+        <select id="referral">
+          <option value="">Select one</option>
+          <option>Google / web search</option>
+          <option>Friend or family referral</option>
+          <option>Attorney referral</option>
+          <option>Social media</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="consent-box">
+        <strong>No attorney-client relationship</strong><br>
+        Submitting this form does not create an attorney-client relationship. Our team will contact you to arrange a consultation. Legal advice is provided only after an engagement letter is signed.
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="c1">
+        <label for="c1">I understand this form does not create an attorney-client relationship.</label>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="c2">
+        <label for="c2">I confirm the information I provided is accurate to the best of my knowledge.</label>
+      </div>
+
+      <div id="err-banner" class="banner-warn hidden" style="margin-top:1rem">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.345 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+        <span id="err-text">Something went wrong.</span>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="btn-back" onclick="go(2)">← Back</button>
+      <span class="pnote">3 of 3</span>
+      <button class="btn-next" id="submit-btn" onclick="submitForm()">Submit →</button>
+    </div>
+  </div>
+
+  <!-- Success -->
+  <div id="success" class="card hidden">
+    <div class="success-wrap">
+      <div class="success-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="#0F6E56" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <div class="success-title">Inquiry received</div>
+      <div class="success-sub">Thank you. A member of our team will be in touch within 2–3 business days.</div>
+      <div id="urg-confirm" class="urg-note hidden">
+        <strong>Flagged as urgent.</strong> We will aim to contact you within 24 hours.
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  let cur = 1
+
+  function pick(gid, el) {
+    document.querySelectorAll('#'+gid+' .pill').forEach(p => p.classList.remove('selected'))
+    el.classList.add('selected')
+  }
+
+  function val(gid) {
+    const s = document.querySelector('#'+gid+' .pill.selected')
+    return s ? s.dataset.val : ''
+  }
+
+  function go(n) {
+    document.getElementById('step'+cur).classList.add('hidden')
+    if (n === 'success') {
+      document.getElementById('success').classList.remove('hidden')
+      updateProg(4); return
+    }
+    document.getElementById('step'+n).classList.remove('hidden')
+    cur = n; updateProg(n)
+    window.scrollTo(0, 0)
+  }
+
+  function updateProg(n) {
+    ['s1','s2','s3'].forEach((id,i) => {
+      document.getElementById(id).className =
+        'seg'+(i+1<n?' done':i+1===n?' active':'')
+    })
+    ['l1','l2','l3'].forEach((id,i) => {
+      document.getElementById(id).className =
+        'slbl'+(i+1<n?' done':i+1===n?' active':'')
+    })
+  }
+
+  function dlToggle() {
+    const show = val('grp-dl') === 'yes'
+    document.getElementById('dl-fields').classList.toggle('hidden', !show)
+    if (!show) document.getElementById('urg-banner').classList.add('hidden')
+  }
+
+  function urgencyCheck() {
+    const v = document.getElementById('dl-date').value
+    if (!v) return
+    const diff = (new Date(v) - new Date()) / 86400000
+    document.getElementById('urg-banner').classList.toggle('hidden', !(diff >= 0 && diff <= 14))
+  }
+
+  function toStep2() {
+    if (!document.getElementById('fname').value.trim()) return alert('Please enter your first name.')
+    if (!document.getElementById('email').value.trim()) return alert('Please enter your email address.')
+    go(2)
+  }
+
+  function toStep3() {
+    if (!document.getElementById('situation').value.trim()) return alert('Please describe your situation.')
+    go(3)
+  }
+
+  async function submitForm() {
+    if (!document.getElementById('c1').checked || !document.getElementById('c2').checked)
+      return alert('Please confirm both statements before submitting.')
+
+    const btn = document.getElementById('submit-btn')
+    btn.disabled = true; btn.textContent = 'Submitting...'
+    document.getElementById('err-banner').classList.add('hidden')
+
+    const payload = {
+      firstName:   document.getElementById('fname').value.trim(),
+      lastName:    document.getElementById('lname').value.trim(),
+      email:       document.getElementById('email').value.trim(),
+      phone:       document.getElementById('phone').value.trim(),
+      contact:     val('grp-contact'),
+      bestTime:    val('grp-time'),
+      situation:   document.getElementById('situation').value.trim(),
+      hasAttorney: val('grp-atty'),
+      selfUrgency: val('grp-urg'),
+      hasDeadline: val('grp-dl'),
+      deadlineDate: document.getElementById('dl-date')?.value || '',
+      deadlineType: document.getElementById('dl-type')?.value || '',
+      referral:    document.getElementById('referral').value,
+    }
+
+    try {
+      const res  = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const data = await res.json()
+
+      if (!res.ok) {
+        document.getElementById('err-text').textContent = data.error || 'Something went wrong.'
+        document.getElementById('err-banner').classList.remove('hidden')
+        btn.disabled = false; btn.textContent = 'Submit →'
+        return
+      }
+
+      if (data.urgent) document.getElementById('urg-confirm').classList.remove('hidden')
+      go('success')
+
+    } catch {
+      document.getElementById('err-text').textContent = 'Network error — please try again.'
+      document.getElementById('err-banner').classList.remove('hidden')
+      btn.disabled = false; btn.textContent = 'Submit →'
+    }
+  }
+</script>
+</body>
+</html>

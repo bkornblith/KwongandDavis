@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intake submissions</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f4f0; color: #1a1a18; padding: 2rem 1rem; min-height: 100vh;
+    }
+    .shell { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 20px; font-weight: 500; margin-bottom: .25rem; }
+    .sub { font-size: 13px; color: #5F5E5A; margin-bottom: 1.5rem; }
+
+    /* Auth */
+    .auth-card {
+      background: #fff; border: 0.5px solid rgba(0,0,0,.1);
+      border-radius: 12px; padding: 1.5rem; max-width: 360px;
+    }
+    .auth-card label { display: block; font-size: 12px; font-weight: 500; color: #5F5E5A; margin-bottom: 5px; }
+    .auth-card input {
+      width: 100%; font-size: 14px; padding: 8px 10px;
+      border: 0.5px solid rgba(0,0,0,.2); border-radius: 8px;
+      font-family: inherit; outline: none; margin-bottom: .75rem;
+    }
+    .auth-card input:focus { border-color: #378ADD; box-shadow: 0 0 0 2px rgba(55,138,221,.12); }
+    .btn {
+      font-size: 13px; font-weight: 500; color: #fff; background: #185FA5;
+      border: none; border-radius: 8px; padding: 8px 20px; cursor: pointer; width: 100%;
+    }
+    .btn:hover { background: #0C447C; }
+
+    /* Stats row */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+    .stat { background: #fff; border-radius: 8px; padding: .875rem 1rem; }
+    .stat-label { font-size: 11px; color: #888780; margin-bottom: 4px; }
+    .stat-val { font-size: 22px; font-weight: 500; }
+    .stat-val.urgent { color: #A32D2D; }
+
+    /* Table */
+    .tbl-wrap { background: #fff; border: 0.5px solid rgba(0,0,0,.1); border-radius: 12px; overflow: hidden; }
+    .tbl-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .875rem 1.25rem; border-bottom: 0.5px solid rgba(0,0,0,.08);
+    }
+    .tbl-title { font-size: 14px; font-weight: 500; }
+    .refresh-btn {
+      font-size: 12px; color: #185FA5; background: none; border: none; cursor: pointer; padding: 4px 0;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; font-size: 11px; font-weight: 500; color: #888780;
+      padding: .625rem 1.25rem; background: #f5f4f0; border-bottom: 0.5px solid rgba(0,0,0,.08);
+    }
+    td { padding: .75rem 1.25rem; border-bottom: 0.5px solid rgba(0,0,0,.06); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafaf8; }
+    .badge {
+      display: inline-block; font-size: 11px; font-weight: 500;
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .badge-urgent  { background: #FCEBEB; color: #A32D2D; }
+    .badge-normal  { background: #E1F5EE; color: #0F6E56; }
+    .situation-cell { max-width: 260px; color: #5F5E5A; line-height: 1.4; }
+    .name-cell { font-weight: 500; }
+    .email-cell { color: #185FA5; }
+    .date-cell  { color: #888780; white-space: nowrap; }
+
+    /* Detail modal */
+    .modal-bg {
+      min-height: 500px; background: rgba(0,0,0,.4);
+      display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem;
+    }
+    .modal {
+      background: #fff; border-radius: 12px; padding: 1.5rem;
+      width: 100%; max-width: 560px;
+    }
+    .modal h2 { font-size: 16px; font-weight: 500; margin-bottom: 1rem; }
+    .modal-row { display: flex; gap: 8px; margin-bottom: .6rem; font-size: 13px; }
+    .modal-lbl { color: #888780; min-width: 140px; flex-shrink: 0; }
+    .modal-val { color: #1a1a18; line-height: 1.5; }
+    .modal-close {
+      display: block; width: 100%; margin-top: 1.25rem; font-size: 13px;
+      padding: 8px; border: 0.5px solid rgba(0,0,0,.2); border-radius: 8px;
+      background: none; cursor: pointer; color: #5F5E5A;
+    }
+    .modal-close:hover { background: #f5f4f0; }
+
+    .empty { text-align: center; padding: 3rem; color: #888780; font-size: 14px; }
+    .loading { text-align: center; padding: 3rem; color: #888780; font-size: 14px; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <h1>Intake submissions</h1>
+  <p class="sub">All inquiries submitted via the intake form.</p>
+
+  <!-- Auth gate -->
+  <div id="auth-gate" class="auth-card">
+    <label for="secret-input">Admin secret</label>
+    <input type="password" id="secret-input" placeholder="Enter your admin secret" onkeydown="if(event.key==='Enter')load()">
+    <button class="btn" onclick="load()">View submissions</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="hidden">
+    <div class="stats" id="stats"></div>
+    <div class="tbl-wrap">
+      <div class="tbl-head">
+        <span class="tbl-title">All submissions</span>
+        <button class="refresh-btn" onclick="refresh()">Refresh</button>
+      </div>
+      <div id="tbl-body"></div>
+    </div>
+  </div>
+
+  <!-- Detail view -->
+  <div id="detail-view" class="hidden">
+    <div class="modal-bg">
+      <div class="modal">
+        <h2 id="detail-name">Submission detail</h2>
+        <div id="detail-rows"></div>
+        <button class="modal-close" onclick="closeDetail()">← Back to list</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let secret = ''
+  let rows   = []
+
+  async function load() {
+    secret = document.getElementById('secret-input').value.trim()
+    if (!secret) return alert('Please enter your admin secret.')
+    await refresh()
+  }
+
+  async function refresh() {
+    try {
+      const res  = await fetch('/api/rows?secret=' + encodeURIComponent(secret))
+      const data = await res.json()
+
+      if (!res.ok) return alert(data.error || 'Unauthorised — check your admin secret.')
+
+      rows = data.rows
+      document.getElementById('auth-gate').classList.add('hidden')
+      document.getElementById('dashboard').classList.remove('hidden')
+      renderStats()
+      renderTable()
+    } catch {
+      alert('Network error — could not load submissions.')
+    }
+  }
+
+  function renderStats() {
+    const urgent = rows.filter(r => r.is_urgent).length
+    const today  = rows.filter(r => {
+      const d = new Date(r.created_at)
+      const n = new Date()
+      return d.toDateString() === n.toDateString()
+    }).length
+
+    document.getElementById('stats').innerHTML = `
+      <div class="stat">
+        <div class="stat-label">Total submissions</div>
+        <div class="stat-val">${rows.length}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Urgent</div>
+        <div class="stat-val urgent">${urgent}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Today</div>
+        <div class="stat-val">${today}</div>
+      </div>
+    `
+  }
+
+  function renderTable() {
+    if (!rows.length) {
+      document.getElementById('tbl-body').innerHTML =
+        '<div class="empty">No submissions yet.</div>'
+      return
+    }
+
+    const rowsHtml = rows.map((r, i) => `
+      <tr onclick="openDetail(${i})" style="cursor:pointer">
+        <td class="name-cell">${esc(r.first_name)} ${esc(r.last_name)}</td>
+        <td class="email-cell">${esc(r.email)}</td>
+        <td class="situation-cell">${esc(r.situation?.slice(0, 80))}${r.situation?.length > 80 ? '…' : ''}</td>
+        <td>
+          <span class="badge ${r.is_urgent ? 'badge-urgent' : 'badge-normal'}">
+            ${r.is_urgent ? 'Urgent' : 'Normal'}
+          </span>
+        </td>
+        <td class="date-cell">${fmtDate(r.created_at)}</td>
+      </tr>
+    `).join('')
+
+    document.getElementById('tbl-body').innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Situation</th>
+            <th>Status</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    `
+  }
+
+  function openDetail(i) {
+    const r = rows[i]
+    document.getElementById('detail-name').textContent =
+      `${r.first_name} ${r.last_name}`
+    document.getElementById('detail-rows').innerHTML = [
+      ['Email',         r.email],
+      ['Phone',         r.phone || '—'],
+      ['Submitted',     fmtDate(r.created_at)],
+      ['Urgent',        r.is_urgent ? 'Yes' : 'No'],
+      ['Has deadline',  r.has_deadline || '—'],
+      ['Deadline date', r.deadline_date || '—'],
+      ['Referral',      r.referral || '—'],
+      ['Situation',     r.situation],
+    ].map(([lbl, val]) => `
+      <div class="modal-row">
+        <span class="modal-lbl">${lbl}</span>
+        <span class="modal-val">${esc(String(val))}</span>
+      </div>
+    `).join('')
+
+    document.getElementById('dashboard').classList.add('hidden')
+    document.getElementById('detail-view').classList.remove('hidden')
+  }
+
+  function closeDetail() {
+    document.getElementById('detail-view').classList.add('hidden')
+    document.getElementById('dashboard').classList.remove('hidden')
+  }
+
+  function fmtDate(iso) {
+    return new Date(iso).toLocaleString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+      hour: 'numeric', minute: '2-digit'
+    })
+  }
+
+  function esc(str) {
+    return String(str ?? '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+  }
+</script>
+</body>
+</html>
