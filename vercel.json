@@ -1,10 +1,10 @@
 {
   "outputDirectory": ".",
   "functions": {
-    "API/**/*.js": { "maxDuration": 15 }
+    "api/**/*.js": { "maxDuration": 15 }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/API/$1" },
+    { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)",     "destination": "/$1" }
   ]
 }
