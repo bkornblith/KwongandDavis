@@ -126,7 +126,7 @@
     .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: rgba(247,243,237,0.4); letter-spacing: 0.04em; }
     .footer-disclaimer { font-size: 11px; color: rgba(247,243,237,0.3); line-height: 1.5; max-width: 500px; text-align: center; }
 
-    /* MODAL */
+    /* MODAL SHELL */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(17,28,51,0.88); z-index: 200; justify-content: center; align-items: flex-start; padding: 2rem 1rem; overflow-y: auto; backdrop-filter: blur(6px); }
     .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
     .modal { background: var(--white); max-width: 620px; width: 100%; margin: auto; position: relative; animation: slideUp 0.3s ease; }
@@ -135,69 +135,72 @@
     .modal-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: var(--cream); }
     .modal-close { background: none; border: none; color: rgba(247,243,237,0.45); font-size: 18px; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: color 0.2s; flex-shrink: 0; margin-left: 1rem; }
     .modal-close:hover { color: var(--gold); }
-    .modal-body { padding: 1.5rem 2rem 2rem; }
+    .modal-body { padding: 1.5rem 2rem 2rem; background: #f5f4f0; }
 
-    /* FORM STYLES — prefixed f- to avoid clashing with site styles */
-    .f-prog { display: flex; gap: 4px; margin-bottom: .5rem; }
-    .f-seg { flex: 1; height: 3px; border-radius: 2px; background: #d3d1c7; transition: background .25s; }
-    .f-seg.done { background: var(--navy); }
-    .f-seg.on   { background: var(--gold); }
-    .f-lbls { display: flex; margin-bottom: 1.25rem; }
-    .f-lbl-step { flex: 1; font-size: 11px; color: #888780; text-align: center; }
-    .f-lbl-step.done { color: #5F5E5A; }
-    .f-lbl-step.on   { color: var(--navy); font-weight: 500; }
+    /* FORM STYLES — exact form.html styles, prefixed m- */
+    .m-progress { display: flex; gap: 4px; margin-bottom: .5rem; }
+    .m-seg { flex: 1; height: 3px; border-radius: 2px; background: #d3d1c7; transition: background .25s; }
+    .m-seg.done   { background: #185FA5; }
+    .m-seg.active { background: #85B7EB; }
+    .m-step-labels { display: flex; margin-bottom: 1.5rem; }
+    .m-slbl { flex: 1; font-size: 11px; color: #888780; text-align: center; }
+    .m-slbl.done   { color: #5F5E5A; }
+    .m-slbl.active { color: #185FA5; font-weight: 500; }
 
-    .f-card { background: #fafaf8; border: 0.5px solid rgba(0,0,0,.08); border-radius: 8px; overflow: hidden; }
-    .f-head { padding: .875rem 1.25rem; border-bottom: 0.5px solid rgba(0,0,0,.07); background: #fff; }
-    .f-head-title { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 2px; }
-    .f-head-sub { font-size: 12px; color: #5F5E5A; line-height: 1.4; }
-    .f-body { padding: 1.25rem; }
+    .m-card { background: #fff; border: 0.5px solid rgba(0,0,0,.1); border-radius: 12px; overflow: hidden; }
+    .m-card-head { padding: 1.25rem 1.5rem; border-bottom: 0.5px solid rgba(0,0,0,.08); }
+    .m-card-title { font-size: 17px; font-weight: 500; margin-bottom: 3px; color: #1a1a18; }
+    .m-card-sub   { font-size: 13px; color: #5F5E5A; line-height: 1.5; }
+    .m-card-body  { padding: 1.25rem 1.5rem; }
 
-    .f-field { margin-bottom: .9rem; }
-    .f-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: .9rem; }
-    .f-label { display: block; font-size: 11px; font-weight: 500; color: #5F5E5A; margin-bottom: 4px; }
-    .f-req { color: #A32D2D; }
+    .m-field { margin-bottom: 1.1rem; }
+    .m-row2  { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.1rem; }
+    .m-lbl   { display: block; font-size: 12px; font-weight: 500; color: #5F5E5A; margin-bottom: 5px; }
+    .m-req   { color: #A32D2D; }
+    .m-hint  { font-size: 11px; color: #888780; margin-top: 4px; }
 
-    .f-body input[type=text], .f-body input[type=email], .f-body input[type=tel],
-    .f-body input[type=date], .f-body select, .f-body textarea {
-      width: 100%; font-size: 13px; font-family: 'DM Sans', sans-serif;
-      padding: 8px 10px; border: 0.5px solid rgba(0,0,0,.18); border-radius: 6px;
-      background: #fff; color: #1a1a18; outline: none; transition: border-color .15s, box-shadow .15s;
+    .m-card-body input[type=text], .m-card-body input[type=email], .m-card-body input[type=tel],
+    .m-card-body input[type=date], .m-card-body select, .m-card-body textarea {
+      width: 100%; font-size: 14px; font-family: 'DM Sans', sans-serif;
+      padding: 8px 10px; border: 0.5px solid rgba(0,0,0,.2);
+      border-radius: 8px; background: #fff; color: #1a1a18;
+      outline: none; transition: border-color .15s, box-shadow .15s;
     }
-    .f-body input:focus, .f-body select:focus, .f-body textarea:focus {
-      border-color: var(--navy); box-shadow: 0 0 0 2px rgba(26,39,68,.1);
+    .m-card-body input:focus, .m-card-body select:focus, .m-card-body textarea:focus {
+      border-color: #378ADD; box-shadow: 0 0 0 2px rgba(55,138,221,.12);
     }
-    .f-body textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+    .m-card-body textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
 
-    .f-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-    .f-pill { padding: 6px 12px; border: 0.5px solid rgba(0,0,0,.18); border-radius: 20px; cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif; color: #5F5E5A; background: #fff; transition: all .15s; user-select: none; }
-    .f-pill:hover { border-color: rgba(0,0,0,.35); color: #1a1a18; }
-    .f-pill.sel { border-color: var(--navy); background: #eef1f8; color: var(--navy); }
+    .m-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .m-pill  { padding: 7px 14px; border: 0.5px solid rgba(0,0,0,.18); border-radius: 20px; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; color: #5F5E5A; background: #fff; transition: all .15s; user-select: none; }
+    .m-pill:hover    { border-color: rgba(0,0,0,.35); color: #1a1a18; }
+    .m-pill.selected { border-color: #185FA5; background: #E6F1FB; color: #0C447C; }
 
-    .f-warn { display: flex; align-items: flex-start; gap: 8px; background: #FCEBEB; border: 0.5px solid #F09595; border-radius: 6px; padding: 9px 12px; margin-bottom: .9rem; font-size: 12px; color: #791F1F; line-height: 1.5; font-family: 'DM Sans', sans-serif; }
-    .f-warn svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; }
+    .m-banner-warn { display: flex; align-items: flex-start; gap: 10px; background: #FCEBEB; border: 0.5px solid #F09595; border-radius: 8px; padding: 11px 14px; margin-bottom: 1.1rem; font-size: 13px; color: #791F1F; line-height: 1.5; font-family: 'DM Sans', sans-serif; }
+    .m-banner-warn svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; }
 
-    .f-consent { background: #f0ede8; border-radius: 6px; padding: 10px 12px; font-size: 11px; color: #5F5E5A; line-height: 1.6; margin-bottom: .75rem; font-family: 'DM Sans', sans-serif; }
-    .f-consent strong { font-weight: 500; color: #1a1a18; }
-    .f-check { display: flex; align-items: flex-start; gap: 8px; margin-bottom: .6rem; }
-    .f-check input { margin-top: 2px; width: 14px; height: 14px; flex-shrink: 0; accent-color: var(--navy); }
-    .f-check label { font-size: 12px; line-height: 1.5; cursor: pointer; font-family: 'DM Sans', sans-serif; color: #2a2a2a; }
+    .m-consent-box { background: #f5f4f0; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #5F5E5A; line-height: 1.6; margin-bottom: 1rem; }
+    .m-consent-box strong { font-size: 12px; font-weight: 500; color: #1a1a18; }
+    .m-check-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: .7rem; }
+    .m-check-row input { margin-top: 2px; width: 15px; height: 15px; flex-shrink: 0; accent-color: #185FA5; }
+    .m-check-row label { font-size: 13px; line-height: 1.5; cursor: pointer; font-family: 'DM Sans', sans-serif; color: #1a1a18; }
 
-    .f-foot { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1.25rem; border-top: 0.5px solid rgba(0,0,0,.07); background: #fff; }
-    .f-note { font-size: 11px; color: #888780; }
-    .f-back { font-size: 12px; color: #5F5E5A; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .f-back:hover { color: #1a1a18; }
-    .f-next { font-size: 12px; font-weight: 500; color: var(--cream); background: var(--navy); border: none; border-radius: 6px; padding: 8px 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .15s; }
-    .f-next:hover { background: var(--gold); color: var(--navy); }
-    .f-next:disabled { background: #B4B2A9; cursor: not-allowed; }
+    .m-foot { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-top: 0.5px solid rgba(0,0,0,.08); }
+    .m-pnote    { font-size: 12px; color: #888780; }
+    .m-btn-back { font-size: 13px; color: #5F5E5A; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .m-btn-back:hover { color: #1a1a18; }
+    .m-btn-next { font-size: 13px; font-weight: 500; color: #fff; background: #185FA5; border: none; border-radius: 8px; padding: 8px 22px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .15s; }
+    .m-btn-next:hover    { background: #0C447C; }
+    .m-btn-next:disabled { background: #B4B2A9; cursor: not-allowed; }
 
-    .f-success { padding: 2.5rem 1.5rem; text-align: center; }
-    .f-success-icon { width: 52px; height: 52px; border-radius: 50%; background: #E1F5EE; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
-    .f-success-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--navy); margin-bottom: .5rem; }
-    .f-success-sub { font-size: 13px; color: #5F5E5A; line-height: 1.6; max-width: 340px; margin: 0 auto; font-family: 'DM Sans', sans-serif; }
-    .f-urg-note { background: #FCEBEB; border: 0.5px solid #F09595; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #791F1F; line-height: 1.5; text-align: left; margin-top: 1rem; font-family: 'DM Sans', sans-serif; }
+    .m-success-wrap { padding: 2.5rem 1.5rem; text-align: center; }
+    .m-success-icon { width: 48px; height: 48px; border-radius: 50%; background: #E1F5EE; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .m-success-title { font-size: 17px; font-weight: 500; margin-bottom: .5rem; color: #1a1a18; }
+    .m-success-sub   { font-size: 13px; color: #5F5E5A; line-height: 1.6; max-width: 360px; margin: 0 auto; font-family: 'DM Sans', sans-serif; }
+    .m-urg-note { background: #FCEBEB; border: 0.5px solid #F09595; border-radius: 8px; padding: 11px 14px; font-size: 13px; color: #791F1F; line-height: 1.5; text-align: left; margin-top: 1rem; font-family: 'DM Sans', sans-serif; }
 
-    .f-hide { display: none !important; }
+    .m-hidden { display: none !important; }
+    @media (max-width: 480px) { .m-row2 { grid-template-columns: 1fr; } }
 
     /* MOBILE NAV */
     .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
@@ -398,7 +401,7 @@
   <div class="footer-logo">New York, NY</div>
 </footer>
 
-<!-- MODAL — form is embedded directly, no iframe -->
+<!-- MODAL — form embedded directly, exact form.html content -->
 <div class="modal-overlay" id="the-modal" onclick="handleOverlay(event)">
   <div class="modal">
     <div class="modal-header">
@@ -410,95 +413,129 @@
     </div>
     <div class="modal-body">
 
-      <!-- Progress -->
-      <div class="f-prog">
-        <div class="f-seg on" id="fp1"></div>
-        <div class="f-seg" id="fp2"></div>
-        <div class="f-seg" id="fp3"></div>
+
+      <!-- Progress — exact from form.html -->
+      <div class="m-progress">
+        <div class="m-seg active" id="ms1"></div>
+        <div class="m-seg" id="ms2"></div>
+        <div class="m-seg" id="ms3"></div>
       </div>
-      <div class="f-lbls">
-        <span class="f-lbl-step on" id="fpl1">Your details</span>
-        <span class="f-lbl-step" id="fpl2">Your situation</span>
-        <span class="f-lbl-step" id="fpl3">Deadlines &amp; submit</span>
+      <div class="m-step-labels">
+        <span class="m-slbl active" id="ml1">Your details</span>
+        <span class="m-slbl" id="ml2">Your situation</span>
+        <span class="m-slbl" id="ml3">Deadlines &amp; submit</span>
       </div>
 
       <!-- Step 1 -->
-      <div id="fp-step1" class="f-card">
-        <div class="f-head"><div class="f-head-title">Tell us about yourself</div><div class="f-head-sub">How can we reach you?</div></div>
-        <div class="f-body">
-          <div class="f-row2">
-            <div><label class="f-label">First name <span class="f-req">*</span></label><input type="text" id="fp-fname" placeholder="Jane" autocomplete="given-name"></div>
-            <div><label class="f-label">Last name <span class="f-req">*</span></label><input type="text" id="fp-lname" placeholder="Smith" autocomplete="family-name"></div>
-          </div>
-          <div class="f-field"><label class="f-label">Email address <span class="f-req">*</span></label><input type="email" id="fp-email" placeholder="jane@example.com" autocomplete="email"></div>
-          <div class="f-field"><label class="f-label">Phone number</label><input type="tel" id="fp-phone" placeholder="(212) 555-0100" autocomplete="tel"></div>
-          <div class="f-field">
-            <label class="f-label">Preferred contact method</label>
-            <div class="f-pills" id="fpg-contact">
-              <div class="f-pill sel" data-val="email" onclick="fpick('fpg-contact',this)">Email</div>
-              <div class="f-pill" data-val="phone" onclick="fpick('fpg-contact',this)">Phone call</div>
-              <div class="f-pill" data-val="text" onclick="fpick('fpg-contact',this)">Text message</div>
+      <div id="mstep1" class="m-card">
+        <div class="m-card-head">
+          <div class="m-card-title">Tell us about yourself</div>
+          <div class="m-card-sub">How can we reach you?</div>
+        </div>
+        <div class="m-card-body">
+          <div class="m-row2">
+            <div>
+              <label class="m-lbl" for="m-fname">First name <span class="m-req">*</span></label>
+              <input type="text" id="m-fname" placeholder="Jane" autocomplete="given-name">
+            </div>
+            <div>
+              <label class="m-lbl" for="m-lname">Last name <span class="m-req">*</span></label>
+              <input type="text" id="m-lname" placeholder="Smith" autocomplete="family-name">
             </div>
           </div>
-          <div class="f-field">
-            <label class="f-label">Best time to reach you</label>
-            <div class="f-pills" id="fpg-time">
-              <div class="f-pill sel" data-val="morning" onclick="fpick('fpg-time',this)">Morning</div>
-              <div class="f-pill" data-val="afternoon" onclick="fpick('fpg-time',this)">Afternoon</div>
-              <div class="f-pill" data-val="evening" onclick="fpick('fpg-time',this)">Evening</div>
-              <div class="f-pill" data-val="anytime" onclick="fpick('fpg-time',this)">Any time</div>
+          <div class="m-field">
+            <label class="m-lbl" for="m-email">Email address <span class="m-req">*</span></label>
+            <input type="email" id="m-email" placeholder="jane@example.com" autocomplete="email">
+          </div>
+          <div class="m-field">
+            <label class="m-lbl" for="m-phone">Phone number</label>
+            <input type="tel" id="m-phone" placeholder="(212) 555-0100" autocomplete="tel">
+          </div>
+          <div class="m-field">
+            <label class="m-lbl">Preferred contact method</label>
+            <div class="m-pills" id="mg-contact">
+              <div class="m-pill selected" data-val="email"  onclick="mpick('mg-contact',this)">Email</div>
+              <div class="m-pill"          data-val="phone"  onclick="mpick('mg-contact',this)">Phone call</div>
+              <div class="m-pill"          data-val="text"   onclick="mpick('mg-contact',this)">Text message</div>
+            </div>
+          </div>
+          <div class="m-field">
+            <label class="m-lbl">Best time to reach you</label>
+            <div class="m-pills" id="mg-time">
+              <div class="m-pill selected" data-val="morning"   onclick="mpick('mg-time',this)">Morning</div>
+              <div class="m-pill"          data-val="afternoon" onclick="mpick('mg-time',this)">Afternoon</div>
+              <div class="m-pill"          data-val="evening"   onclick="mpick('mg-time',this)">Evening</div>
+              <div class="m-pill"          data-val="anytime"   onclick="mpick('mg-time',this)">Any time</div>
             </div>
           </div>
         </div>
-        <div class="f-foot"><span></span><span class="f-note">1 of 3</span><button class="f-next" onclick="fpStep2()">Continue →</button></div>
+        <div class="m-foot">
+          <span></span>
+          <span class="m-pnote">1 of 3</span>
+          <button class="m-btn-next" onclick="mToStep2()">Continue →</button>
+        </div>
       </div>
 
       <!-- Step 2 -->
-      <div id="fp-step2" class="f-card f-hide">
-        <div class="f-head"><div class="f-head-title">Your situation</div><div class="f-head-sub">Describe what's happening — no legal language needed.</div></div>
-        <div class="f-body">
-          <div class="f-field">
-            <label class="f-label">What is your legal issue about? <span class="f-req">*</span></label>
-            <textarea id="fp-situation" rows="4" placeholder="Describe your situation as clearly as you can. Everything you share is kept strictly confidential."></textarea>
+      <div id="mstep2" class="m-card m-hidden">
+        <div class="m-card-head">
+          <div class="m-card-title">Your situation</div>
+          <div class="m-card-sub">Describe what's happening — no legal language needed.</div>
+        </div>
+        <div class="m-card-body">
+          <div class="m-field">
+            <label class="m-lbl" for="m-situation">What is your legal issue about? <span class="m-req">*</span></label>
+            <textarea id="m-situation" rows="5" placeholder="Describe your situation as clearly as you can — for example: I received a notice from my landlord, I was in a car accident, I need help with a contract..."></textarea>
+            <div class="m-hint">Everything you share is kept strictly confidential.</div>
           </div>
-          <div class="f-field">
-            <label class="f-label">Do you currently have an attorney?</label>
-            <div class="f-pills" id="fpg-atty">
-              <div class="f-pill" data-val="yes" onclick="fpick('fpg-atty',this)">Yes</div>
-              <div class="f-pill sel" data-val="no" onclick="fpick('fpg-atty',this)">No</div>
-              <div class="f-pill" data-val="had" onclick="fpick('fpg-atty',this)">I had one previously</div>
+          <div class="m-field">
+            <label class="m-lbl">Do you currently have an attorney?</label>
+            <div class="m-pills" id="mg-atty">
+              <div class="m-pill"          data-val="yes" onclick="mpick('mg-atty',this)">Yes</div>
+              <div class="m-pill selected" data-val="no"  onclick="mpick('mg-atty',this)">No</div>
+              <div class="m-pill"          data-val="had" onclick="mpick('mg-atty',this)">I had one previously</div>
             </div>
           </div>
-          <div class="f-field">
-            <label class="f-label">How urgent is your situation?</label>
-            <div class="f-pills" id="fpg-urg">
-              <div class="f-pill" data-val="immediate" onclick="fpick('fpg-urg',this)">Immediate</div>
-              <div class="f-pill sel" data-val="soon" onclick="fpick('fpg-urg',this)">Within a few weeks</div>
-              <div class="f-pill" data-val="planning" onclick="fpick('fpg-urg',this)">Planning ahead</div>
+          <div class="m-field">
+            <label class="m-lbl">How urgent is your situation?</label>
+            <div class="m-pills" id="mg-urg">
+              <div class="m-pill"          data-val="immediate" onclick="mpick('mg-urg',this)">Immediate</div>
+              <div class="m-pill selected" data-val="soon"      onclick="mpick('mg-urg',this)">Within a few weeks</div>
+              <div class="m-pill"          data-val="planning"  onclick="mpick('mg-urg',this)">Planning ahead</div>
             </div>
           </div>
         </div>
-        <div class="f-foot"><button class="f-back" onclick="fpGo(1)">← Back</button><span class="f-note">2 of 3</span><button class="f-next" onclick="fpStep3()">Continue →</button></div>
+        <div class="m-foot">
+          <button class="m-btn-back" onclick="mGo(1)">← Back</button>
+          <span class="m-pnote">2 of 3</span>
+          <button class="m-btn-next" onclick="mToStep3()">Continue →</button>
+        </div>
       </div>
 
       <!-- Step 3 -->
-      <div id="fp-step3" class="f-card f-hide">
-        <div class="f-head"><div class="f-head-title">Deadlines &amp; submit</div><div class="f-head-sub">Let us know about any upcoming dates.</div></div>
-        <div class="f-body">
-          <div class="f-field">
-            <label class="f-label">Is there an upcoming court date or legal deadline?</label>
-            <div class="f-pills" id="fpg-dl">
-              <div class="f-pill" data-val="yes" onclick="fpick('fpg-dl',this);fpDlToggle()">Yes</div>
-              <div class="f-pill sel" data-val="no" onclick="fpick('fpg-dl',this);fpDlToggle()">No</div>
-              <div class="f-pill" data-val="unsure" onclick="fpick('fpg-dl',this);fpDlToggle()">Not sure</div>
+      <div id="mstep3" class="m-card m-hidden">
+        <div class="m-card-head">
+          <div class="m-card-title">Deadlines &amp; submit</div>
+          <div class="m-card-sub">Let us know about any upcoming dates.</div>
+        </div>
+        <div class="m-card-body">
+          <div class="m-field">
+            <label class="m-lbl">Is there an upcoming court date or legal deadline?</label>
+            <div class="m-pills" id="mg-dl">
+              <div class="m-pill"          data-val="yes"    onclick="mpick('mg-dl',this);mDlToggle()">Yes</div>
+              <div class="m-pill selected" data-val="no"     onclick="mpick('mg-dl',this);mDlToggle()">No</div>
+              <div class="m-pill"          data-val="unsure" onclick="mpick('mg-dl',this);mDlToggle()">Not sure</div>
             </div>
           </div>
-          <div id="fp-dl-wrap" class="f-hide">
-            <div class="f-row2">
-              <div><label class="f-label">Deadline date</label><input type="date" id="fp-dl-date" onchange="fpUrgencyCheck()"></div>
+          <div id="m-dl-fields" class="m-hidden">
+            <div class="m-row2">
               <div>
-                <label class="f-label">Type of deadline</label>
-                <select id="fp-dl-type">
+                <label class="m-lbl" for="m-dl-date">Deadline date</label>
+                <input type="date" id="m-dl-date" onchange="mUrgencyCheck()">
+              </div>
+              <div>
+                <label class="m-lbl" for="m-dl-type">Type of deadline</label>
+                <select id="m-dl-type">
                   <option value="">Select one</option>
                   <option>Court hearing or trial</option>
                   <option>Filing deadline</option>
@@ -508,14 +545,14 @@
                 </select>
               </div>
             </div>
-            <div id="fp-urg-banner" class="f-warn f-hide">
+            <div id="m-urg-banner" class="m-banner-warn m-hidden">
               <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.345 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
               <span><strong>Urgent:</strong> Your deadline is within 14 days. We will prioritise your inquiry.</span>
             </div>
           </div>
-          <div class="f-field">
-            <label class="f-label">How did you hear about us?</label>
-            <select id="fp-referral">
+          <div class="m-field">
+            <label class="m-lbl" for="m-referral">How did you hear about us?</label>
+            <select id="m-referral">
               <option value="">Select one</option>
               <option>Google / web search</option>
               <option>Friend or family referral</option>
@@ -524,29 +561,44 @@
               <option>Other</option>
             </select>
           </div>
-          <div class="f-consent">
+          <div class="m-consent-box">
             <strong>No attorney-client relationship</strong><br>
             Submitting this form does not create an attorney-client relationship. Our team will contact you to arrange a consultation. Legal advice is provided only after an engagement letter is signed.
           </div>
-          <div class="f-check"><input type="checkbox" id="fp-c1"><label for="fp-c1">I understand this form does not create an attorney-client relationship.</label></div>
-          <div class="f-check"><input type="checkbox" id="fp-c2"><label for="fp-c2">I confirm the information I provided is accurate to the best of my knowledge.</label></div>
-          <div id="fp-err" class="f-warn f-hide" style="margin-top:.75rem">
+          <div class="m-check-row">
+            <input type="checkbox" id="m-c1">
+            <label for="m-c1">I understand this form does not create an attorney-client relationship.</label>
+          </div>
+          <div class="m-check-row">
+            <input type="checkbox" id="m-c2">
+            <label for="m-c2">I confirm the information I provided is accurate to the best of my knowledge.</label>
+          </div>
+          <div id="m-err-banner" class="m-banner-warn m-hidden" style="margin-top:1rem">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.345 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
-            <span id="fp-err-txt">Something went wrong.</span>
+            <span id="m-err-text">Something went wrong.</span>
           </div>
         </div>
-        <div class="f-foot"><button class="f-back" onclick="fpGo(2)">← Back</button><span class="f-note">3 of 3</span><button class="f-next" id="fp-submit-btn" onclick="fpSubmit()">Submit →</button></div>
+        <div class="m-foot">
+          <button class="m-btn-back" onclick="mGo(2)">← Back</button>
+          <span class="m-pnote">3 of 3</span>
+          <button class="m-btn-next" id="m-submit-btn" onclick="mSubmitForm()">Submit →</button>
+        </div>
       </div>
 
       <!-- Success -->
-      <div id="fp-success" class="f-card f-hide">
-        <div class="f-success">
-          <div class="f-success-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <div id="m-success" class="m-card m-hidden">
+        <div class="m-success-wrap">
+          <div class="m-success-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                 stroke="#0F6E56" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
           </div>
-          <div class="f-success-title">Inquiry received</div>
-          <div class="f-success-sub">Thank you. A member of our team will be in touch within 2–3 business days.</div>
-          <div id="fp-urg-confirm" class="f-urg-note f-hide"><strong>Flagged as urgent.</strong> We will aim to contact you within 24 hours.</div>
+          <div class="m-success-title">Inquiry received</div>
+          <div class="m-success-sub">Thank you. A member of our team will be in touch within 2–3 business days.</div>
+          <div id="m-urg-confirm" class="m-urg-note m-hidden">
+            <strong>Flagged as urgent.</strong> We will aim to contact you within 24 hours.
+          </div>
         </div>
       </div>
 
@@ -586,88 +638,90 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() })
 
-  // ── Form ──────────────────────────────────────────────────────────────
-  let fStep = 1
+  // ── Form — exact logic from form.html, prefixed m ─────────────────────
+  let mcur = 1
 
-  function fpick(gid, el) {
-    document.querySelectorAll('#' + gid + ' .f-pill').forEach(p => p.classList.remove('sel'))
-    el.classList.add('sel')
+  function mpick(gid, el) {
+    document.querySelectorAll('#' + gid + ' .m-pill').forEach(p => p.classList.remove('selected'))
+    el.classList.add('selected')
   }
-  function fv(gid) {
-    const s = document.querySelector('#' + gid + ' .f-pill.sel')
+  function mval(gid) {
+    const s = document.querySelector('#' + gid + ' .m-pill.selected')
     return s ? s.dataset.val : ''
   }
 
-  function fpGo(n) {
-    document.getElementById('fp-step' + fStep).classList.add('f-hide')
+  function mGo(n) {
+    document.getElementById('mstep' + mcur).classList.add('m-hidden')
     if (n === 'success') {
-      document.getElementById('fp-success').classList.remove('f-hide')
-      fpProg(4)
+      document.getElementById('m-success').classList.remove('m-hidden')
+      mUpdateProg(4)
       setTimeout(closeModal, 2500)
       return
     }
-    document.getElementById('fp-step' + n).classList.remove('f-hide')
-    fStep = n
-    fpProg(n)
+    document.getElementById('mstep' + n).classList.remove('m-hidden')
+    mcur = n
+    mUpdateProg(n)
     document.querySelector('.modal-body').scrollTop = 0
   }
 
-  function fpProg(n) {
-    ;['fp1','fp2','fp3'].forEach((id,i) => {
-      document.getElementById(id).className = 'f-seg' + (i+1 < n ? ' done' : i+1 === n ? ' on' : '')
+  function mUpdateProg(n) {
+    ['ms1','ms2','ms3'].forEach((id,i) => {
+      document.getElementById(id).className =
+        'm-seg' + (i+1 < n ? ' done' : i+1 === n ? ' active' : '')
     })
-    ;['fpl1','fpl2','fpl3'].forEach((id,i) => {
-      document.getElementById(id).className = 'f-lbl-step' + (i+1 < n ? ' done' : i+1 === n ? ' on' : '')
+    ;['ml1','ml2','ml3'].forEach((id,i) => {
+      document.getElementById(id).className =
+        'm-slbl' + (i+1 < n ? ' done' : i+1 === n ? ' active' : '')
     })
   }
 
-  function fpDlToggle() {
-    const show = fv('fpg-dl') === 'yes'
-    document.getElementById('fp-dl-wrap').classList.toggle('f-hide', !show)
-    if (!show) document.getElementById('fp-urg-banner').classList.add('f-hide')
+  function mDlToggle() {
+    const show = mval('mg-dl') === 'yes'
+    document.getElementById('m-dl-fields').classList.toggle('m-hidden', !show)
+    if (!show) document.getElementById('m-urg-banner').classList.add('m-hidden')
   }
 
-  function fpUrgencyCheck() {
-    const v = document.getElementById('fp-dl-date').value
+  function mUrgencyCheck() {
+    const v = document.getElementById('m-dl-date').value
     if (!v) return
     const diff = (new Date(v) - new Date()) / 86400000
-    document.getElementById('fp-urg-banner').classList.toggle('f-hide', !(diff >= 0 && diff <= 14))
+    document.getElementById('m-urg-banner').classList.toggle('m-hidden', !(diff >= 0 && diff <= 14))
   }
 
-  function fpStep2() {
-    if (!document.getElementById('fp-fname').value.trim()) return alert('Please enter your first name.')
-    if (!document.getElementById('fp-email').value.trim()) return alert('Please enter your email address.')
-    fpGo(2)
+  function mToStep2() {
+    if (!document.getElementById('m-fname').value.trim()) return alert('Please enter your first name.')
+    if (!document.getElementById('m-email').value.trim()) return alert('Please enter your email address.')
+    mGo(2)
   }
 
-  function fpStep3() {
-    if (!document.getElementById('fp-situation').value.trim()) return alert('Please describe your situation.')
-    fpGo(3)
+  function mToStep3() {
+    if (!document.getElementById('m-situation').value.trim()) return alert('Please describe your situation.')
+    mGo(3)
   }
 
-  async function fpSubmit() {
-    if (!document.getElementById('fp-c1').checked || !document.getElementById('fp-c2').checked)
+  async function mSubmitForm() {
+    if (!document.getElementById('m-c1').checked || !document.getElementById('m-c2').checked)
       return alert('Please confirm both statements before submitting.')
 
-    const btn = document.getElementById('fp-submit-btn')
+    const btn = document.getElementById('m-submit-btn')
     btn.disabled = true
     btn.textContent = 'Submitting...'
-    document.getElementById('fp-err').classList.add('f-hide')
+    document.getElementById('m-err-banner').classList.add('m-hidden')
 
     const payload = {
-      firstName:    document.getElementById('fp-fname').value.trim(),
-      lastName:     document.getElementById('fp-lname').value.trim(),
-      email:        document.getElementById('fp-email').value.trim(),
-      phone:        document.getElementById('fp-phone').value.trim(),
-      contact:      fv('fpg-contact'),
-      bestTime:     fv('fpg-time'),
-      situation:    document.getElementById('fp-situation').value.trim(),
-      hasAttorney:  fv('fpg-atty'),
-      selfUrgency:  fv('fpg-urg'),
-      hasDeadline:  fv('fpg-dl'),
-      deadlineDate: document.getElementById('fp-dl-date')?.value || '',
-      deadlineType: document.getElementById('fp-dl-type')?.value || '',
-      referral:     document.getElementById('fp-referral').value,
+      firstName:    document.getElementById('m-fname').value.trim(),
+      lastName:     document.getElementById('m-lname').value.trim(),
+      email:        document.getElementById('m-email').value.trim(),
+      phone:        document.getElementById('m-phone').value.trim(),
+      contact:      mval('mg-contact'),
+      bestTime:     mval('mg-time'),
+      situation:    document.getElementById('m-situation').value.trim(),
+      hasAttorney:  mval('mg-atty'),
+      selfUrgency:  mval('mg-urg'),
+      hasDeadline:  mval('mg-dl'),
+      deadlineDate: document.getElementById('m-dl-date')?.value || '',
+      deadlineType: document.getElementById('m-dl-type')?.value || '',
+      referral:     document.getElementById('m-referral').value,
     }
 
     try {
@@ -679,19 +733,19 @@
       const data = await res.json()
 
       if (!res.ok) {
-        document.getElementById('fp-err-txt').textContent = data.error || 'Something went wrong.'
-        document.getElementById('fp-err').classList.remove('f-hide')
+        document.getElementById('m-err-text').textContent = data.error || 'Something went wrong.'
+        document.getElementById('m-err-banner').classList.remove('m-hidden')
         btn.disabled = false
         btn.textContent = 'Submit →'
         return
       }
 
-      if (data.urgent) document.getElementById('fp-urg-confirm').classList.remove('f-hide')
-      fpGo('success')
+      if (data.urgent) document.getElementById('m-urg-confirm').classList.remove('m-hidden')
+      mGo('success')
 
     } catch {
-      document.getElementById('fp-err-txt').textContent = 'Network error — please try again.'
-      document.getElementById('fp-err').classList.remove('f-hide')
+      document.getElementById('m-err-text').textContent = 'Network error — please try again.'
+      document.getElementById('m-err-banner').classList.remove('m-hidden')
       btn.disabled = false
       btn.textContent = 'Submit →'
     }
