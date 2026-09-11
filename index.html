@@ -447,6 +447,8 @@
     }
     .bio-card {
       background: var(--cream);
+      display: flex;
+      flex-direction: column;
     }
     .bio-photo {
       width: 100%;
@@ -474,6 +476,9 @@
     }
     .bio-body {
       padding: 2.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
     .bio-name {
       font-family: 'Cormorant Garamond', serif;
@@ -497,11 +502,16 @@
       color: var(--text-mid);
       margin-bottom: 1.5rem;
     }
+    .bio-text:last-of-type { margin-bottom: 0; }
     .bio-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 1.5rem;
+      margin-top: auto;
+      padding-top: 0.5rem;
+      margin-bottom: 1.25rem;
+      min-height: 62px;
+      align-content: flex-end;
     }
     .bio-tag {
       font-size: 11px;
@@ -518,6 +528,7 @@
       border-bottom: 1px solid rgba(201,169,110,0.3);
       padding-bottom: 2px;
       transition: border-color 0.2s;
+      align-self: flex-start;
     }
     .bio-email:hover { border-color: var(--gold); }
 
@@ -825,6 +836,7 @@
 
       /* Team */
       .team-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .bio-tags { min-height: 0; margin-top: 1.5rem; padding-top: 0; }
 
       /* Contact */
       #contact { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
@@ -841,11 +853,6 @@
       .modal { max-height: 100dvh; border-radius: 0; }
       .modal-header { padding: 2rem 1.5rem; }
       .modal-body { padding: 1.5rem; }
-      .form-grid { grid-template-columns: 1fr; }
-      .form-group.full { grid-column: 1; }
-
-      /* Tweaks */
-      #tweaks-panel { left: 1rem; right: 1rem; bottom: 1rem; min-width: unset; }
     }
 
     @media (max-width: 600px) {
@@ -947,6 +954,9 @@
       .m-check-row label { font-size: 13.5px; }
       .m-step-labels { display: none; }
       .m-progress { margin-bottom: 1.25rem; }
+      /* On mobile the modal fills the viewport, so overlay-tap and Escape are
+         both unavailable — this is the only way out. Match the 44px targets. */
+      .modal-close { width: 44px; height: 44px; margin: -6px -10px 0 0; }
     }
 
     /* ─── TWEAKS PANEL ─── */
@@ -1193,7 +1203,6 @@
             <span class="bio-tag">Humanitarian Immigration</span>
             <span class="bio-tag">Removal Defense</span>
             <span class="bio-tag">Work Authorization</span>
-            <span class="bio-tag">NYLAG Alumni</span>
           </div>
           <a href="mailto:brendan@davisandkwong.com" class="bio-email">brendan@davisandkwong.com</a>
         </div>
@@ -1208,16 +1217,15 @@
           <div class="bio-name">Julia Kwong</div>
           <div class="bio-title">Partner &amp; Co-Founder</div>
           <p class="bio-text">
-            Julia is a seasoned immigration attorney with deep roots in public interest law. Before co-founding Davis &amp; Kwong LLP, she served as a Senior Staff Attorney at the New York Legal Assistance Group (NYLAG), where she represented low-income clients in complex immigration matters including asylum, removal defense, and family petitions.
+            Julia is a seasoned immigration attorney with deep roots in public interest law. Before co-founding Davis &amp; Kwong LLP, she served as a Supervising Attorney at the New York Legal Assistance Group (NYLAG), where she represented low-income clients in complex immigration matters including asylum, removal defense, and family petitions.
           </p>
           <p class="bio-text">
-            Known for her meticulous preparation and genuine care for clients, Julia has successfully litigated before immigration courts, the Board of Immigration Appeals, and federal circuit courts. She is fluent in Mandarin and has a particular focus on protecting clients from East and Southeast Asia.
+            Known for her meticulous preparation and genuine care for clients, Julia has successfully litigated before immigration courts, the Board of Immigration Appeals, and federal circuit courts. She is fluent in Cantonese and Mandarin, and has represented clients from across East and Southeast Asia, much of Africa, and the Caribbean.
           </p>
           <div class="bio-tags">
             <span class="bio-tag">Asylum</span>
             <span class="bio-tag">Removal Defense</span>
             <span class="bio-tag">Family Immigration</span>
-            <span class="bio-tag">NYLAG Alumni</span>
           </div>
           <a href="mailto:julia@davisandkwong.com" class="bio-email">julia@davisandkwong.com</a>
         </div>
