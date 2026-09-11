@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kwong & Davis LLP — Immigration Attorneys</title>
+  <title>Davis & Kwong LLP — Immigration Attorneys</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -363,14 +363,15 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
+      padding: 9px 16px;
       background: var(--cream);
       font-size: 12px;
+      line-height: 1.4;
       color: var(--navy);
       font-weight: 400;
       letter-spacing: 0.04em;
     }
-    .flag-icon { font-size: 16px; }
+    .flag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 
     /* ─── PRACTICE AREAS ─── */
     #practice {
@@ -923,6 +924,31 @@
     .m-hidden{display:none !important}
     @media(max-width:480px){.m-row2{grid-template-columns:1fr}}
 
+    /* Mobile intake form. Must come AFTER the .m-* / .modal rules above:
+       the earlier max-width:900px block sets .modal-body padding, but those
+       later same-specificity rules were overriding it. */
+    @media (max-width: 900px) {
+      .modal-overlay { padding: 0; }
+      .modal { max-width: 100%; min-height: 100dvh; }
+      .modal-header { padding: 1.5rem 1.25rem; }
+      .modal-header h2 { font-size: 23px; }
+      .modal-body { padding: 1.25rem 1.25rem 2.5rem; }
+      .m-card-head, .m-card-body, .m-foot { padding-left: 1.1rem; padding-right: 1.1rem; }
+      /* 44px minimum touch targets */
+      .m-pill { padding: 12px 18px; font-size: 14px; }
+      .m-btn-next { padding: 13px 26px; font-size: 14px; }
+      .m-btn-back { padding: 13px 4px; font-size: 14px; }
+      .m-card-body input[type=text], .m-card-body input[type=email],
+      .m-card-body input[type=tel], .m-card-body input[type=date],
+      .m-card-body select { padding: 12px 12px; font-size: 16px; }
+      .m-card-body textarea { font-size: 16px; padding: 12px; }
+      .m-check-row { gap: 12px; padding: 4px 0; }
+      .m-check-row input { width: 20px; height: 20px; }
+      .m-check-row label { font-size: 13.5px; }
+      .m-step-labels { display: none; }
+      .m-progress { margin-bottom: 1.25rem; }
+    }
+
     /* ─── TWEAKS PANEL ─── */
     #tweaks-panel {
       display: none !important;
@@ -977,8 +1003,8 @@
   <!-- NAV -->
   <nav id="main-nav">
     <a href="#home" class="nav-logo">
-      <div class="nav-logo-mark">K&D</div>
-      <div class="nav-logo-text">Kwong &amp; Davis LLP</div>
+      <div class="nav-logo-mark">D&K</div>
+      <div class="nav-logo-text">Davis &amp; Kwong LLP</div>
     </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
@@ -1005,12 +1031,12 @@
   <section id="home">
     <div class="hero-bg-pattern"></div>
     <div class="hero-left">
-      <div class="hero-eyebrow">Immigration Law — New York &amp; Australia</div>
+      <div class="hero-eyebrow">Immigration Law — New York, NY</div>
       <h1 class="hero-headline">
         Legal advocacy<br>rooted in <em>humanity</em>
       </h1>
       <p class="hero-sub">
-        Kwong &amp; Davis LLP is a boutique immigration firm dedicated to guiding individuals and families through one of life's most consequential journeys — with experience, compassion, and care.
+        Davis &amp; Kwong LLP is a boutique immigration firm dedicated to guiding individuals and families through one of life's most consequential journeys — with experience, compassion, and care.
       </p>
       <div class="hero-actions">
         <button class="btn-primary" onclick="openIntake()">Start Your Intake</button>
@@ -1030,7 +1056,7 @@
         </div>
         <div class="hero-card-item">
           <div class="hero-card-dot"></div>
-          <div class="hero-card-item-text">E-3 visas for Australian nationals</div>
+          <div class="hero-card-item-text">Citizenship &amp; naturalization</div>
         </div>
         <div class="hero-card-item">
           <div class="hero-card-dot"></div>
@@ -1059,14 +1085,14 @@
       <h2 class="section-title">Built on a belief<br>that <em>everyone deserves</em><br>a fair chance</h2>
       <div class="divider"></div>
       <p class="section-body">
-        Kwong &amp; Davis LLP was founded by two immigration attorneys who met while representing clients at the New York Legal Assistance Group — one of the nation's largest legal services providers. United by a shared belief that immigration law should be a force for equity, Julia and Brendan launched the firm to bring the same depth of public-interest experience to a wider community of clients.
+        Davis &amp; Kwong LLP was founded by two immigration attorneys who met while representing clients at the New York Legal Assistance Group — one of the nation's largest legal services providers. United by a shared belief that immigration law should be a force for equity, Brendan and Julia launched the firm to bring the same depth of public-interest experience to a wider community of clients.
       </p>
       <p class="section-body" style="margin-top:1.25rem;">
-        The firm's practice spans the full breadth of US immigration law, with particular expertise in humanitarian cases, asylum proceedings, and the special needs of Australian nationals navigating the US visa system. Every client is treated as a whole person, not a case number.
+        The firm's practice spans the full breadth of US immigration law, with particular expertise in humanitarian cases, asylum proceedings, and removal defense. Every client is treated as a whole person, not a case number.
       </p>
       <div class="about-flags">
-        <div class="flag-pill"><span class="flag-icon">🇺🇸</span> Licensed in New York</div>
-        <div class="flag-pill"><span class="flag-icon">🇦🇺</span> Australian law experience</div>
+        <div class="flag-pill"><span class="flag-dot"></span> Licensed in New York</div>
+        <div class="flag-pill"><span class="flag-dot"></span> Serving clients nationwide</div>
       </div>
       <div class="about-stats">
         <div class="about-stat">
@@ -1078,8 +1104,8 @@
           <div class="about-stat-label">Years of combined immigration law experience</div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-num">2</div>
-          <div class="about-stat-label">Jurisdictions — US and Australian law</div>
+          <div class="about-stat-num">100%</div>
+          <div class="about-stat-label">Immigration law — the only thing we practice</div>
         </div>
         <div class="about-stat">
           <div class="about-stat-num">∞</div>
@@ -1092,7 +1118,7 @@
         <p class="about-quote-text">
           "We started this firm because we believe immigration law has the power to reunite families, protect the vulnerable, and build communities. That belief drives everything we do."
         </p>
-        <div class="about-quote-source">— Julia Kwong &amp; Brendan Davis</div>
+        <div class="about-quote-source">— Brendan Davis &amp; Julia Kwong</div>
       </div>
     </div>
   </section>
@@ -1105,7 +1131,7 @@
         <h2 class="section-title">How we can<br><em>help you</em></h2>
       </div>
       <p class="section-body">
-        Our practice spans the full spectrum of US immigration law, with deep expertise in humanitarian protection and cross-border matters for those with ties to Australia.
+        Our practice spans the full spectrum of US immigration law, with deep expertise in humanitarian protection and the cases that turn on getting the details right.
       </p>
     </div>
     <div class="practice-grid">
@@ -1116,8 +1142,8 @@
       </div>
       <div class="practice-card">
         <div class="practice-icon">🌏</div>
-        <div class="practice-card-title">E-3 Visas &amp; Australian Nationals</div>
-        <p class="practice-card-body">The E-3 visa is available exclusively to Australian citizens in specialty occupations. We help Australians navigate the US visa process — from initial applications to renewals, transfers, and status changes.</p>
+        <div class="practice-card-title">Citizenship &amp; Naturalization</div>
+        <p class="practice-card-body">Guiding lawful permanent residents through naturalization — eligibility review, the N-400 application, the civics and English examinations, and the oath ceremony. We also handle derivative citizenship claims.</p>
       </div>
       <div class="practice-card">
         <div class="practice-icon">👨‍👩‍👧</div>
@@ -1151,6 +1177,30 @@
 
       <div class="bio-card">
         <div class="bio-photo">
+          <div class="bio-photo-initials">BD</div>
+          <div class="bio-photo-accent"></div>
+        </div>
+        <div class="bio-body">
+          <div class="bio-name">Brendan Davis</div>
+          <div class="bio-title">Partner &amp; Co-Founder</div>
+          <p class="bio-text">
+            Brendan has spent his career building immigration legal services where they were most needed. He previously served as a Supervising Attorney at the New York Legal Assistance Group (NYLAG) and as Legal Services Coordinator at South Bronx United, where he built an immigration legal services program from the ground up.
+          </p>
+          <p class="bio-text">
+            His practice centers on humanitarian immigration, removal defense, and work authorization. Brendan is known for taking on the cases other firms consider too complicated, and for explaining the process in terms clients actually understand.
+          </p>
+          <div class="bio-tags">
+            <span class="bio-tag">Humanitarian Immigration</span>
+            <span class="bio-tag">Removal Defense</span>
+            <span class="bio-tag">Work Authorization</span>
+            <span class="bio-tag">NYLAG Alumni</span>
+          </div>
+          <a href="mailto:brendan@davisandkwong.com" class="bio-email">brendan@davisandkwong.com</a>
+        </div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-photo">
           <div class="bio-photo-initials">JK</div>
           <div class="bio-photo-accent"></div>
         </div>
@@ -1158,7 +1208,7 @@
           <div class="bio-name">Julia Kwong</div>
           <div class="bio-title">Partner &amp; Co-Founder</div>
           <p class="bio-text">
-            Julia is a seasoned immigration attorney with deep roots in public interest law. Before co-founding Kwong &amp; Davis LLP, she served as a Senior Staff Attorney at the New York Legal Assistance Group (NYLAG), where she represented low-income clients in complex immigration matters including asylum, removal defense, and family petitions.
+            Julia is a seasoned immigration attorney with deep roots in public interest law. Before co-founding Davis &amp; Kwong LLP, she served as a Senior Staff Attorney at the New York Legal Assistance Group (NYLAG), where she represented low-income clients in complex immigration matters including asylum, removal defense, and family petitions.
           </p>
           <p class="bio-text">
             Known for her meticulous preparation and genuine care for clients, Julia has successfully litigated before immigration courts, the Board of Immigration Appeals, and federal circuit courts. She is fluent in Mandarin and has a particular focus on protecting clients from East and Southeast Asia.
@@ -1169,31 +1219,7 @@
             <span class="bio-tag">Family Immigration</span>
             <span class="bio-tag">NYLAG Alumni</span>
           </div>
-          <a href="mailto:julia@kwonganddavis.com" class="bio-email">julia@kwonganddavis.com</a>
-        </div>
-      </div>
-
-      <div class="bio-card">
-        <div class="bio-photo">
-          <div class="bio-photo-initials">BD</div>
-          <div class="bio-photo-accent"></div>
-        </div>
-        <div class="bio-body">
-          <div class="bio-name">Brendan Davis</div>
-          <div class="bio-title">Partner &amp; Co-Founder</div>
-          <p class="bio-text">
-            Originally from Australia and holding dual legal qualifications (LL.B., University of Queensland), Brendan brings a rare cross-jurisdictional perspective to US immigration law. He previously served as a Supervising Attorney at NYLAG and as Legal Services Coordinator at South Bronx United, where he built immigration legal services programs from the ground up.
-          </p>
-          <p class="bio-text">
-            Brendan specializes in E-3 visa matters for Australian nationals, humanitarian immigration, and community-based legal services. His experience bridging two legal systems makes him uniquely equipped to serve clients with ties to both the US and Australia.
-          </p>
-          <div class="bio-tags">
-            <span class="bio-tag">E-3 Visas</span>
-            <span class="bio-tag">Humanitarian Immigration</span>
-            <span class="bio-tag">Australian Law</span>
-            <span class="bio-tag">NYLAG Alumni</span>
-          </div>
-          <a href="mailto:brendan@kwonganddavis.com" class="bio-email">brendan@kwonganddavis.com</a>
+          <a href="mailto:julia@davisandkwong.com" class="bio-email">julia@davisandkwong.com</a>
         </div>
       </div>
 
@@ -1220,31 +1246,25 @@
       <h2 class="section-title">Contact the<br><em>firm</em></h2>
       <div class="divider"></div>
       <p class="section-body">
-        We welcome inquiries from prospective clients and referral partners. For a confidential consultation, please complete our intake form or reach out directly.
+        New clients: please start with our intake form — it gives us what we need to assess your matter properly. Referral partners and existing clients can reach either partner directly.
       </p>
     </div>
     <div>
       <div class="contact-info-item">
-        <div class="contact-info-label">General Inquiries</div>
+        <div class="contact-info-label">Brendan Davis</div>
         <div class="contact-info-value">
-          <a href="mailto:info@kwonganddavis.com">info@kwonganddavis.com</a>
+          <a href="mailto:brendan@davisandkwong.com">brendan@davisandkwong.com</a>
         </div>
       </div>
       <div class="contact-info-item">
         <div class="contact-info-label">Julia Kwong</div>
         <div class="contact-info-value">
-          <a href="mailto:julia@kwonganddavis.com">julia@kwonganddavis.com</a>
-        </div>
-      </div>
-      <div class="contact-info-item">
-        <div class="contact-info-label">Brendan Davis</div>
-        <div class="contact-info-value">
-          <a href="mailto:brendan@kwonganddavis.com">brendan@kwonganddavis.com</a>
+          <a href="mailto:julia@davisandkwong.com">julia@davisandkwong.com</a>
         </div>
       </div>
       <div class="contact-info-item">
         <div class="contact-info-label">Location</div>
-        <div class="contact-info-value">New York, NY<br><span style="font-size:13px;color:var(--text-light)">Serving clients nationwide &amp; Australian nationals globally</span></div>
+        <div class="contact-info-value">New York, NY<br><span style="font-size:13px;color:var(--text-light)">Serving clients nationwide</span></div>
       </div>
       <div class="contact-info-item">
         <div class="contact-info-label">Begin Your Matter</div>
@@ -1257,7 +1277,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Kwong &amp; Davis LLP &copy; 2025</div>
+    <div class="footer-logo">Davis &amp; Kwong LLP &copy; 2025</div>
     <div class="footer-disclaimer">
       Attorney advertising. The information on this website is for general informational purposes only and does not constitute legal advice. Contacting us does not create an attorney-client relationship.
     </div>
@@ -1309,7 +1329,7 @@
         <div id="mstep2" class="m-card m-hidden">
           <div class="m-card-head"><div class="m-card-title">Your situation</div><div class="m-card-sub">Describe what's happening — no legal language needed.</div></div>
           <div class="m-card-body">
-            <div class="m-field"><label class="m-lbl" for="m-situation">What is your immigration matter about? <span class="m-req">*</span></label><textarea id="m-situation" rows="5" placeholder="Describe your situation as clearly as you can — for example: my asylum interview is scheduled, I need to renew my E-3 visa, I want to petition for my spouse..."></textarea><div class="m-hint">Everything you share is kept strictly confidential.</div></div>
+            <div class="m-field"><label class="m-lbl" for="m-situation">What is your immigration matter about? <span class="m-req">*</span></label><textarea id="m-situation" rows="5" placeholder="Describe your situation as clearly as you can — for example: my asylum interview is scheduled, I need to renew my work permit, I want to petition for my spouse..."></textarea><div class="m-hint">Everything you share is kept strictly confidential.</div></div>
             <div class="m-field"><label class="m-lbl">Do you currently have an attorney?</label>
               <div class="m-pills" id="mg-atty">
                 <div class="m-pill" data-val="yes" onclick="mpick('mg-atty',this)">Yes</div>
@@ -1544,7 +1564,7 @@
         isUrgent:     mUrgent ? 'Yes' : 'No'
       };
       if (SHEET_ENDPOINT === 'REPLACE_WITH_WEB_APP_URL') {
-        mErr('Intake form not yet connected — add your Apps Script Web app URL in the page source. In the meantime, email info@kwonganddavis.com.');
+        mErr('Intake form not yet connected — add your Apps Script Web app URL in the page source. In the meantime, email brendan@davisandkwong.com.');
         return;
       }
       btn.disabled = true; btn.textContent = 'Submitting…';
@@ -1565,7 +1585,7 @@
         mSubmitted = true;
         mUpdateProg(4);
       } catch (err) {
-        mErr('We could not submit your inquiry. Please try again, or email info@kwonganddavis.com.');
+        mErr('We could not submit your inquiry. Please try again, or email brendan@davisandkwong.com.');
         btn.disabled = false; btn.textContent = 'Submit →';
       }
     }
