@@ -26,6 +26,7 @@
     }
 
     html { scroll-behavior: smooth; }
+    a[data-goto] { cursor: pointer; }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -1012,15 +1013,15 @@
 
   <!-- NAV -->
   <nav id="main-nav">
-    <a href="#home" class="nav-logo">
+    <a class="nav-logo" data-goto="home">
       <div class="nav-logo-mark">D&K</div>
       <div class="nav-logo-text">Davis &amp; Kwong LLP</div>
     </a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#practice">Practice</a></li>
-      <li><a href="#team">Attorneys</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a data-goto="about">About</a></li>
+      <li><a data-goto="practice">Practice</a></li>
+      <li><a data-goto="team">Attorneys</a></li>
+      <li><a data-goto="contact">Contact</a></li>
     </ul>
     <button class="nav-cta" onclick="openIntake()">Begin Intake</button>
     <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -1030,10 +1031,10 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="#about" onclick="closeMenu()">About</a>
-    <a href="#practice" onclick="closeMenu()">Practice Areas</a>
-    <a href="#team" onclick="closeMenu()">Attorneys</a>
-    <a href="#contact" onclick="closeMenu()">Contact</a>
+    <a data-goto="about" onclick="closeMenu()">About</a>
+    <a data-goto="practice" onclick="closeMenu()">Practice Areas</a>
+    <a data-goto="team" onclick="closeMenu()">Attorneys</a>
+    <a data-goto="contact" onclick="closeMenu()">Contact</a>
   </div>
 
   <!-- HERO -->
@@ -1049,7 +1050,7 @@
       </p>
       <div class="hero-actions">
         <button class="btn-primary" onclick="openIntake()">Start Your Intake</button>
-        <a href="#about" class="btn-secondary">Our Story</a>
+        <a class="btn-secondary" data-goto="about">Our Story</a>
       </div>
       <div class="hero-scroll">
         <div class="hero-scroll-line"></div>
@@ -1437,6 +1438,17 @@
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.pageYOffset > 80);
+    });
+
+    // In-page nav. These are hrefless so the browser shows no link preview
+    // in the status bar; offset accounts for the fixed 72px nav.
+    document.querySelectorAll('[data-goto]').forEach(el => {
+      el.addEventListener('click', () => {
+        const t = document.getElementById(el.dataset.goto);
+        if (!t) return;
+        const top = el.dataset.goto === 'home' ? 0 : t.getBoundingClientRect().top + window.pageYOffset - 72;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
     });
 
     // Mobile menu
