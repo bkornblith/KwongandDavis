@@ -1428,6 +1428,7 @@
 
     // Intake modal
     function openIntake() {
+      if (mSubmitted) mResetForm();
       document.getElementById('intake-modal').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -1444,6 +1445,29 @@
 
     // ── Intake form ──
     let mUrgent = false;
+    let mSubmitted = false;
+
+    // Wipes every field and returns the modal to step 1, so reopening after a
+    // successful submit starts a fresh intake.
+    function mResetForm() {
+      ['m-fname','m-lname','m-email','m-phone','m-situation','m-dl-date','m-dl-type','m-referral']
+        .forEach(id => { document.getElementById(id).value = ''; });
+      document.getElementById('m-c1').checked = false;
+      document.getElementById('m-c2').checked = false;
+      // Restore each pill group to its original default.
+      const defaults = { 'mg-contact':'email', 'mg-time':'morning', 'mg-atty':'no', 'mg-urg':'soon', 'mg-dl':'no' };
+      Object.entries(defaults).forEach(([gid, val]) => {
+        document.querySelectorAll('#' + gid + ' .m-pill').forEach(p =>
+          p.classList.toggle('selected', p.dataset.val === val));
+      });
+      mUrgent = false;
+      mSubmitted = false;
+      ['m-dl-fields','m-urg-banner','m-err-banner','m-urg-confirm','m-success']
+        .forEach(id => document.getElementById(id).classList.add('m-hidden'));
+      const btn = document.getElementById('m-submit-btn');
+      btn.disabled = false; btn.textContent = 'Submit →';
+      mGo(1);
+    }
     function mpick(gid, el) {
       document.querySelectorAll('#' + gid + ' .m-pill').forEach(p => p.classList.remove('selected'));
       el.classList.add('selected');
@@ -1538,6 +1562,7 @@
         [1,2,3].forEach(i => document.getElementById('mstep' + i).classList.add('m-hidden'));
         document.getElementById('m-success').classList.remove('m-hidden');
         document.getElementById('m-urg-confirm').classList.toggle('m-hidden', !mUrgent);
+        mSubmitted = true;
         mUpdateProg(4);
       } catch (err) {
         mErr('We could not submit your inquiry. Please try again, or email info@kwonganddavis.com.');
