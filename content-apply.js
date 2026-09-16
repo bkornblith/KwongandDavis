@@ -208,6 +208,8 @@
     });
 
     // ── contact ────────────────────────────────────────────────────────────
+    // Email rows are derived from the partner list, so each address is
+    // entered once and appears both here and on the attorney's bio card.
     section('contact', function () {
       var d = data.contact;
       if (!d) return;
@@ -218,13 +220,13 @@
       var col = q('[data-col="contact-info"]');
       if (!col) return;
 
-      var emails = (d.emails || []).filter(function (r) {
-        return has(r.email) || has(r.label);
-      }).map(function (r) {
+      var emails = ((data.team && data.team.partners) || []).filter(function (p) {
+        return has(p.email);
+      }).map(function (p) {
         return '<div class="contact-info-item" data-contact-row="email">' +
-          '<div class="contact-info-label">' + esc(r.label) + '</div>' +
-          '<div class="contact-info-value"><a href="mailto:' + esc(r.email) + '">' +
-          esc(r.email) + '</a></div></div>';
+          '<div class="contact-info-label">' + esc(p.name) + '</div>' +
+          '<div class="contact-info-value"><a href="mailto:' + esc(p.email) + '">' +
+          esc(p.email) + '</a></div></div>';
       }).join('');
 
       var location = '<div class="contact-info-item" data-contact-row="location">' +

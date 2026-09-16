@@ -1,0 +1,1 @@
+import{a as e}from"./Observable-J1YNseAw.js";import{r as t}from"./filter-Da26BGbA.js";function n(n,r){var i=typeof r==`object`;return new Promise(function(a,o){var s=new e({next:function(e){a(e),s.unsubscribe()},error:o,complete:function(){i?a(r.defaultValue):o(new t)}});n.subscribe(s)})}export{n as t};

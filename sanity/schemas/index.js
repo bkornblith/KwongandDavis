@@ -87,6 +87,7 @@ const partner = defineType({
       name: 'email',
       title: 'Email address',
       type: 'string',
+      description: 'Shown on the bio card and in the Contact section.',
       validation: (r) => r.required().email(),
     }),
   ],
@@ -272,6 +273,7 @@ const site = defineType({
     defineField({
       name: 'contact', title: 'Contact', type: 'object', group: 'contact',
       options: {collapsible: false},
+      description: "The email rows come from the Attorneys tab \u2014 each partner's address appears here automatically.",
       fields: [
         defineField({name: 'eyebrow', title: 'Section label', type: 'string'}),
         defineField({
@@ -279,24 +281,6 @@ const site = defineType({
           description: 'Wrap a phrase in *asterisks* for the gold italic.',
         }),
         defineField({name: 'intro', title: 'Introduction', type: 'text', rows: 4}),
-        defineField({
-          name: 'emails', title: 'Email contacts', type: 'array',
-          description:
-            'One row per person. Two or three read well in the column; more starts to crowd the intake button below.',
-          of: [
-            defineArrayMember({
-              type: 'object',
-              fields: [
-                defineField({name: 'label', title: 'Name or label', type: 'string'}),
-                defineField({
-                  name: 'email', title: 'Email address', type: 'string',
-                  validation: (r) => r.email(),
-                }),
-              ],
-              preview: {select: {title: 'label', subtitle: 'email'}},
-            }),
-          ],
-        }),
         defineField({name: 'locationLabel', title: 'Location label', type: 'string'}),
         defineField({name: 'location', title: 'Location', type: 'string'}),
         defineField({name: 'locationNote', title: 'Location note', type: 'string'}),
