@@ -1097,7 +1097,7 @@
 
   <!-- ABOUT -->
   <section id="about">
-    <div>
+    <div data-col="about-main">
       <div class="section-eyebrow">Our Story</div>
       <h2 class="section-title">Built on a belief<br>that <em>everyone deserves</em><br>a fair chance</h2>
       <div class="divider"></div>
@@ -1264,7 +1264,7 @@
         New clients: please start with our intake form — it gives us what we need to assess your matter properly. Referral partners and existing clients can reach either partner directly.
       </p>
     </div>
-    <div>
+    <div data-col="contact-info">
       <div class="contact-info-item" data-contact-row="email">
         <div class="contact-info-label">Brendan Davis</div>
         <div class="contact-info-value">
@@ -1281,7 +1281,7 @@
         <div class="contact-info-label">Location</div>
         <div class="contact-info-value">New York, NY<br><span style="font-size:13px;color:var(--text-light)">Serving clients nationwide</span></div>
       </div>
-      <div class="contact-info-item">
+      <div class="contact-info-item" data-contact-row="cta">
         <div class="contact-info-label">Begin Your Matter</div>
         <div class="contact-info-value">
           <button class="btn-primary" onclick="openIntake()" style="margin-top:0.5rem">Complete Intake Form</button>
@@ -1698,6 +1698,7 @@
       if (opt) setPalette(TWEAK_DEFAULTS.palette, opt);
     }
   </script>
+  <script src="content-apply.js"></script>
   <script src="sanity-content.js"></script>
 </body>
 </html>
