@@ -20,13 +20,20 @@
   var DATASET = 'production';
   var API_VERSION = 'v2024-01-01';
 
-  if (!window.DKContent || !window.fetch) return;
+  if (!window.fetch) return;
+  if (!window.DKContent) {
+    console.warn('[sanity] content-apply.js did not load — the page is showing ' +
+      'its built-in copy. Check that content-apply.js is deployed alongside index.html.');
+    return;
+  }
 
-  // apicdn is edge-cached but purged on publish, so it is both fast and current.
-  var url = 'https://' + PROJECT_ID + '.apicdn.sanity.io/' + API_VERSION +
+  // The uncached endpoint, not apicdn: apicdn is edge-cached and can serve a
+  // stale response for a minute or so after publishing, which defeats the
+  // point of refreshing live. A little slower, always current.
+  var url = 'https://' + PROJECT_ID + '.api.sanity.io/' + API_VERSION +
     '/data/query/' + DATASET + '?query=' + encodeURIComponent(window.DKContent.GROQ);
 
-  fetch(url)
+  fetch(url, {cache: 'no-store'})
     .then(function (r) { return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
     .then(function (json) {
       if (!json || !json.result) return;
@@ -35,6 +42,7 @@
         dataset: DATASET,
         warn: function (name, err) { console.warn('[sanity] ' + name, err); }
       });
+      console.info('[sanity] content applied, revision ' + json.result._rev);
     })
     .catch(function (err) {
       console.warn('[sanity] content fetch failed, using built-in copy:', err);
