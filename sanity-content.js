@@ -1,13 +1,17 @@
 /**
- * Davis & Kwong LLP — live content refresh
+ * Davis & Kwong LLP — Sanity content
  *
- * The deployed HTML already carries the published copy: scripts/build.js bakes
- * it in during the Vercel build, which a Sanity webhook triggers on every
- * publish. This script is the gap-closer — it re-fetches on page load so a
- * visitor who arrives during the ~1 minute a rebuild takes still sees the new
- * copy.
+ * Fetches the published content on every page load and applies it, so an
+ * editor's change appears the moment they press Publish. No build, no deploy.
  *
- * Every failure path is a no-op: the baked-in copy is already on screen.
+ * The HTML ships with the current copy baked in, which is what renders first
+ * and what search engines read. This then overwrites it. If Sanity is
+ * unreachable the baked copy simply stays — nothing here can leave the page
+ * blank.
+ *
+ * Requires, in sanity.io/manage → API:
+ *   - dataset `production` set to Public
+ *   - `https://davisandkwong.com` listed under CORS origins (credentials off)
  */
 (function () {
   'use strict';
@@ -18,6 +22,7 @@
 
   if (!window.DKContent || !window.fetch) return;
 
+  // apicdn is edge-cached but purged on publish, so it is both fast and current.
   var url = 'https://' + PROJECT_ID + '.apicdn.sanity.io/' + API_VERSION +
     '/data/query/' + DATASET + '?query=' + encodeURIComponent(window.DKContent.GROQ);
 
@@ -32,8 +37,6 @@
       });
     })
     .catch(function (err) {
-      // Expected when the dataset or origin is not browser-readable. The
-      // build-time bake is the primary path, so this is not a failure.
-      console.info('[sanity] live refresh skipped, using deployed copy:', err);
+      console.warn('[sanity] content fetch failed, using built-in copy:', err);
     });
 })();
