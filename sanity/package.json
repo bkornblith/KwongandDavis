@@ -1,0 +1,17 @@
+{
+  "name": "davisandkwong-studio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity dev",
+    "deploy": "sanity deploy",
+    "seed": "sanity dataset import seed.ndjson production --replace"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sanity": "^6.14.1",
+    "styled-components": "^6.1.19"
+  }
+}

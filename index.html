@@ -275,6 +275,9 @@
       margin-bottom: 1.5rem;
     }
     .section-title em { font-style: italic; color: var(--gold); }
+    /* The intake section sits on navy, so its italic uses the lighter gold.
+       Kept as a rule (not an inline style) so CMS-hydrated headings match. */
+    #intake .section-title em { color: var(--gold-light); }
     .section-body {
       font-size: 16px;
       font-weight: 300;
@@ -468,6 +471,10 @@
       color: var(--gold);
       opacity: 0.6;
     }
+    .bio-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* The gold corner accent is a stand-in for imagery — drop it once there
+       is a real photograph behind it. */
+    .bio-photo.has-photo .bio-photo-accent { display: none; }
     .bio-photo-accent {
       position: absolute;
       bottom: 0; right: 0;
@@ -1239,7 +1246,7 @@
     <div class="intake-pattern"></div>
     <div class="intake-inner">
       <div class="section-eyebrow">Get Started</div>
-      <h2 class="section-title" style="color:var(--cream)">Ready to take<br>the <em style="color:var(--gold-light)">next step?</em></h2>
+      <h2 class="section-title" style="color:var(--cream)">Ready to take<br>the <em>next step?</em></h2>
       <p class="section-body" style="color:rgba(247,243,237,0.65);margin:0 auto 2.5rem;">
         We begin every client relationship with a careful intake process to understand your situation and determine how we can best help you. Complete our confidential intake form to get started.
       </p>
@@ -1258,19 +1265,19 @@
       </p>
     </div>
     <div>
-      <div class="contact-info-item">
+      <div class="contact-info-item" data-contact-row="email">
         <div class="contact-info-label">Brendan Davis</div>
         <div class="contact-info-value">
           <a href="mailto:brendan@davisandkwong.com">brendan@davisandkwong.com</a>
         </div>
       </div>
-      <div class="contact-info-item">
+      <div class="contact-info-item" data-contact-row="email">
         <div class="contact-info-label">Julia Kwong</div>
         <div class="contact-info-value">
           <a href="mailto:julia@davisandkwong.com">julia@davisandkwong.com</a>
         </div>
       </div>
-      <div class="contact-info-item">
+      <div class="contact-info-item" data-contact-row="location">
         <div class="contact-info-label">Location</div>
         <div class="contact-info-value">New York, NY<br><span style="font-size:13px;color:var(--text-light)">Serving clients nationwide</span></div>
       </div>
@@ -1285,7 +1292,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Davis &amp; Kwong LLP &copy; 2026</div>
+    <div class="footer-logo">Davis &amp; Kwong LLP &copy; 2025</div>
     <div class="footer-disclaimer">
       Attorney advertising. The information on this website is for general informational purposes only and does not constitute legal advice. Contacting us does not create an attorney-client relationship.
     </div>
@@ -1691,5 +1698,6 @@
       if (opt) setPalette(TWEAK_DEFAULTS.palette, opt);
     }
   </script>
+  <script src="sanity-content.js"></script>
 </body>
 </html>
